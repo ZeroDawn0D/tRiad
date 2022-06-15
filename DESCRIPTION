@@ -1,11 +1,12 @@
 Package: triad
-Title: What the Package Does (One Line, Title Case)
+Title: Constrained Delaunay Triangulations in R 
 Version: 0.0.0.9000
 Authors@R: 
-    person("First", "Last", , "first.last@example.com", role = c("aut", "cre"),
-           comment = c(ORCID = "YOUR-ORCID-ID"))
-Description: What the package does (one paragraph).
-License: GPL (>= 3)
+    person(
+      "Umang", "Majumder", , "umang26112003@gmail.com", 
+      role = c("aut", "cre"))
+Description: An implementation of the Constrained Delaunay Triangulations as detailed in Cline and Renka(1990)
+Licens e: GPL (>= 3)
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.2.0

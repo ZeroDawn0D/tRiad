@@ -34,6 +34,7 @@ A data frame with 142 rows and 26 variables:
 \item \strong{x_shape_x}: x-values for the \code{x_shape} dataset
 \item \strong{x_shape_y}: y-values for the \code{x_shape} dataset
 }
+}
 \usage{
 datasaurus_dozen_wide
 }

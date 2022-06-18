@@ -1,4 +1,8 @@
-# triad
+# tRiad
+<!-- badges: start -->
+  [![R-CMD-check](https://github.com/ZeroDawn0D/triad/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/ZeroDawn0D/triad/actions/workflows/R-CMD-check.yaml)
+<!-- badges: end -->
+
 TODO: Complete README
 
 R functions from cran/tripack:

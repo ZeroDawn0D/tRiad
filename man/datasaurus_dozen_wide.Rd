@@ -3,7 +3,7 @@
 \docType{data}
 \name{datasaurus_dozen_wide}
 \alias{datasaurus_dozen_wide}
-\title{datasaurus_dozen_wide}
+\title{Datasaurus Dozen (wide) data}
 \format{
 A data frame with 142 rows and 26 variables:
 \itemize{
@@ -39,6 +39,16 @@ A data frame with 142 rows and 26 variables:
 datasaurus_dozen_wide
 }
 \description{
-A dataset demonstrating the utility of visualization. These 13 datasets are equal in standard measures: mean, standard deviation, and Pearson's correlation.
+A dataset demonstrating the utility of visualization.
+These 12 datasets are equal in standard measures: mean,
+standard deviation, and Pearson's correlation.
+}
+\references{
+Matejka, J., & Fitzmaurice, G. (2017).
+Same Stats, Different Graphs: Generating Datasets with
+Varied Appearance and Identical Statistics through Simulated
+Annealing. \emph{CHI 2017 Conference proceedings: ACM SIGCHI
+Conference on Human Factors in Computing Systems.}
+Retrieved from \url{https://www.autodeskresearch.com/publications/samestats}. #nolint
 }
 \keyword{datasets}

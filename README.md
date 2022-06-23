@@ -1,5 +1,27 @@
-# triad
-TODO: Complete README
+# tRiad
+
+<!-- badges: start -->
+
+[![R-CMD-check](https://github.com/ZeroDawn0D/triad/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/ZeroDawn0D/triad/actions/workflows/R-CMD-check.yaml)
+
+<!-- badges: end -->
+
+## overview
+
+tRiad is a package to perform Constrained Delaunay Triangulations
+([Cline and
+Renka(1990)](https://epubs.siam.org/doi/abs/10.1137/0727074)) on a set
+of 2D points
+
+## installation
+
+``` r
+#Development version
+#install.packages("devtools")
+devtools::install_github("ZeroDawn0D/tRiad")
+```
+
+## tripack
 
 R functions from cran/tripack:
 
@@ -24,5 +46,3 @@ R functions from cran/tripack:
 - triangles      
 - voronoi      
 - voronoi.mosaic
-
-TODO: Decide which license to use

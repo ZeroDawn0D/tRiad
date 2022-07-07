@@ -4,26 +4,25 @@
 #' @param x1 The x value
 #' @param y1 The y value
 #' @param z1 The z value
-new_vector3D <- function(x1 = 0, y1 = 0, z1 = 0){
-  stopifnot(is.numeric(x1) && is.numeric(y1) && is.numeric(z1))
-  value <- list(x = x1, y = y1, z = z1)
-  class(value) = "vector3D"
+new_vector2D <- function(x1 = 0, y1 = 0){
+  stopifnot(is.numeric(x1) && is.numeric(y1))
+  value <- list(x = x1, y = y1)
+  class(value) = "vector2D"
   value
 }
 
 
 #' @title Cross Product of two vectors
 #'
-#' @description Calculates the Cross Product of two vector3D objects and returns a single vector3D object.
+#' @description Calculates the Cross Product of two vector2D objects and returns the Z value of the resulting vector
 #' @param a First vector
 #' @param b Second vector
 cross_product <- function(a,b){
-  stopifnot(class(a)=="vector3D" && class(b)=="vector3D")
+  stopifnot(class(a)=="vector2D" && class(b)=="vector2D")
   #Z axis of the two vectors are guaranteed to be zero
   #resultant vector will only be along Z axis
   c_z <- (a$x*b$y - b$x*a$y)
-  c <- new_vector3D(0,0,c_z)
-  c
+  c_z
 }
 
 #' @title Checks if a point lies strictly to the left of a line segment
@@ -33,15 +32,15 @@ cross_product <- function(a,b){
 #' @param b final point of a->b vector
 #' @param c Point whose relative position is to be calculated
 is_left_of <- function(a,b,c){
-  stopifnot(class(a)=="vector3D" && class(b)=="vector3D" && class(c)=="vector3D")
+  stopifnot(class(a)=="vector2D" && class(b)=="vector2D" && class(c)=="vector2D")
 
   #a->b vector
-  ab <- new_vector3D(b$x-a$x,b$y-a$y,b$z-a$z)
+  ab <- new_vector2D(b$x-a$x,b$y-a$y)
 
   #a->c vector
-  ac <- new_vector3D(c$x-a$x,c$y-a$y,c$z-a$z)
+  ac <- new_vector2D(c$x-a$x,c$y-a$y)
 
-  cross_product(ab,ac)$z > 0
+  cross_product(ab,ac) > 0
 }
 
 

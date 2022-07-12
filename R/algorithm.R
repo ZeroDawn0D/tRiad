@@ -1,4 +1,3 @@
-
 retriangulate <- function(nodeset,a,b,triangle_set,reqd_edges){
   #(1) Define X as the set of elements of nodeset strictly left of a->b and unseparated from the midpoint of a and b by any element of R.
   #If X is not empty:
@@ -8,6 +7,21 @@ retriangulate <- function(nodeset,a,b,triangle_set,reqd_edges){
     #(5) If [a, x] not in R, retriangulate (nodeset, a, x, triangle_set, reqd_edges).
     #(6) If [x, b] not in R, retriangulate (nodeset, x, b, triangle_set, reqd_edges).
 }
+
+new_triad <- function(x,y,v1,v2,v3,e1,e2,e3){
+  triad.obj <- list(
+    x=x,
+    y=y,
+    v1=v1,
+    v2=v2,
+    v3=v3,
+    e1=e1,
+    e2=e2,
+    e3=e3)
+  class(triad.obj) <- "triad"
+  triad.obj
+}
+
 
 del_tri <- function(x,y=NULL, ...){
   if(is.null(y)){
@@ -50,9 +64,59 @@ delaun <- function(n,points){
   e2 <- c(0)
   e3 <- c(0)
   ntri = 1
+  tstack <- c()
   for(i in 1:n){
     enc_tri <- triloc(i,x,y,v1,v2,v3,e1,e2,e3)
+    numtri <- len(v1)
+    V1 <- v1[enc_tri]
+    V2 <- v2[enc_tri]
+    V3 <- v3[enc_tri]
+    E1 <- e1[enc_tri]
+    E2 <- e2[enc_tri]
+    E3 <- e3[enc_tri]
+    #triangle T
+    v1[enc_tri] <- i
+    v2[enc_tri] <- V1
+    v3[enc_tri] <- V2
+
+    e1[enc_tri] <- E1
+    e2[enc_tri] <- numtri+1
+    e3[enc_tri] <- numtri+2
+
+    #triangle numtri+1
+    v1[numtri+1] <- i
+    v2[numtri+1] <- V2
+    v3[numtri+1] <- V3
+
+    e1[numtri+1] <- enc_tri
+    e2[numtri+1] <- E2
+    e3[numtri+1] <- numtri+2
+
+    #triangle numtri+2
+    v1[numtri+2] <- i
+    v2[numtri+2] <- V3
+    v3[numtri+2] <- V1
+
+    e1[numtri+2] <- numtri+1
+    e2[numtri+2] <- E3
+    e3[numtri+2] <- enc_tri
+
+
+
+    #stack if the edge opp P is adjacent to some other triangle
+    if(e2[enc_tri] != 0){
+      tstack <- c(enc_tri,tstack)
+    }
+    if(e2[numtri+1] != 0){
+      tstack <- c(numtri+1, tstack)
+    }
+    if(e2[numtri+2] != 0){
+      tstack <- c(numtri+2,tstack)
+    }
   }
+
+  #Lawson's procedure
+
 }
 
 triloc <- function(i,x,y,v1,v2,v3,e1,e2,e3){
@@ -98,6 +162,12 @@ triloc <- function(i,x,y,v1,v2,v3,e1,e2,e3){
     return(cur.tri)
   }
 }
+
+# if true, new point is inside circumcircle for triangle R
+swap <- function(){
+
+}
+
 
 #checks if P is left or right of A->B
 left.right <- function(Px,Py,Ax,Ay,Bx,By){

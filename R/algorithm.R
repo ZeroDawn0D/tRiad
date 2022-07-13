@@ -23,12 +23,12 @@ new_triad <- function(x,y,v1,v2,v3,e1,e2,e3){
 }
 
 
-del_tri <- function(x,y=NULL, ...){
-  if(is.null(y)){
+del_tri <- function(x, y=NULL, ...){
+  if (is.null(y)) {
     x_p <- x$x
     y_p <- y$y
   }
-  else{
+  else {
     x_p <- x
     y_p <- y
   }

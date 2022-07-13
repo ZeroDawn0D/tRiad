@@ -7,6 +7,13 @@ e1 <- c(4,1,2,3)
 e2 <- c(0,0,0,0)
 e3 <- c(2,3,4,1)
 
+# library(tidyverse)
+# d <- tibble(x, y, i=1:length(x))
+# e <- tibble(v1, v2)
+# ggplot(d, aes(x, y)) + geom_point() +
+#   geom_segment(aes(x = x[v1]), xend = x[v2],
+#      y=y[v1], yend=y[v2])
+
 test_that("triloc tests", {
   expect_equal(triloc(6,x,y,v1,v2,v3,e1,e2,e3), 1)
   expect_equal(triloc(7,x,y,v1,v2,v3,e1,e2,e3), 2)

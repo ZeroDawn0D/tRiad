@@ -119,6 +119,21 @@ delaun <- function(n,points){
 
 }
 
+#' Check which triangles a point lies within
+#'
+#' This function takes partial triangulation
+#' and checks whether points are inside of
+#' the existing triangles
+#'
+#' @param i row index
+#' @param d tibble with two components, x, y
+#'  giving positions of points to be triangulated
+#' @param v vertices of triangles, columns are triangle
+#'   number and rows are vertices 1, 2, and 3
+#' @param e adjacency of triangles, columns are triangle
+#'   number and rows are ids of adjacent triangles
+#'
+#' @export
 triloc <- function(i,x,y,v1,v2,v3,e1,e2,e3){
   cur.tri = 1
   # arc1 is opposite v1

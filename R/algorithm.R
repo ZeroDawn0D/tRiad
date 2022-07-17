@@ -134,7 +134,6 @@ delaun <- function(n, norm_x, norm_y){
   #Lawson's procedure
 
 }
-<<<<<<< HEAD
 #' Check which triangles a point lies within
 #'
 #' This function takes partial triangulation

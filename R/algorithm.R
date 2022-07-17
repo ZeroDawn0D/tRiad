@@ -8,25 +8,21 @@ retriangulate <- function(nodeset,a,b,triangle_set,reqd_edges){
     #(6) If [x, b] not in R, retriangulate (nodeset, x, b, triangle_set, reqd_edges).
 }
 
-new_triad <- function(x,y,v1,v2,v3,e1,e2,e3){
+new_triad <- function(x,y,v,e){
   triad.obj <- list(
     x=x,
     y=y,
-    v1=v1,
-    v2=v2,
-    v3=v3,
-    e1=e1,
-    e2=e2,
-    e3=e3)
+    v=v,
+    e=e)
   class(triad.obj) <- "triad"
   triad.obj
 }
 
 
-del_tri <- function(x,y=NULL, ...){
+del_tri <- function(x,y=NULL, maxrange=TRUE, ...){
   if(is.null(y)){
     x_p <- x$x
-    y_p <- y$y
+    y_p <- x$y
   }
   else{
     x_p <- x
@@ -40,77 +36,92 @@ del_tri <- function(x,y=NULL, ...){
   x_max <- max(x_p)
   y_min <- min(y_p)
   y_max <- max(y_p)
-  d_max <- max(x_max-x_min, y_max-y_min)
-  norm_x <- (x_p-x_min)/d_max
-  norm_y <- (y_p - y_min)/d_max
-  points <- data.frame(index = 1:n,
-                          x=x_p,y=y_p,
-                          norm_x,norm_y)
-  delaun(n,points)
+  x_range <- x_max-x_min
+  y_range <- y_max-y_min
+  d_max <- max(x_range, y_range)
+  if(maxrange){
+    x_div <- d_max
+    y_div <- d_max
+  }else{
+    x_div <- x_range
+    y_div <- y_range
+  }
+  norm_x <- (x_p - x_min)/x_div
+  norm_y <- (y_p - y_min)/x_div
+
+  delaun(n,norm_x, norm_y)
 }
 
 
-delaun <- function(n,points){
-  x <- points$norm_x
-  y <- points$norm_y
+delaun <- function(n, norm_x, norm_y){
+  x <- norm_x
+  y <- norm_y
   x <- c(x,-100,100,0)
   y <- c(y,-100,-100,100)
   # v1[i],v2[i],v3[i] are the three vertices of the i'th triangle
   v1 <- c(n+1)
   v2 <- c(n+2)
   v3 <- c(n+3)
+  v <- matrix(c(n+1,n+2,n+3), nrow = 3, ncol = 1)
   # e1,e2,e3 are the adj tri of ith triangle
   e1 <- c(0)
   e2 <- c(0)
   e3 <- c(0)
+  e <- matrix(c(0,0,0), nrow = 3, ncol = 1)
   ntri = 1
   tstack <- c()
   for(i in 1:n){
-    enc_tri <- triloc(i,x,y,v1,v2,v3,e1,e2,e3)
-    numtri <- len(v1)
-    V1 <- v1[enc_tri]
-    V2 <- v2[enc_tri]
-    V3 <- v3[enc_tri]
-    E1 <- e1[enc_tri]
-    E2 <- e2[enc_tri]
-    E3 <- e3[enc_tri]
+    enc_tri <- triloc(i,x,y,v,e)
+    numtri <- length(v)/3
+    V1 <- v[1,enc_tri]
+    V2 <- v[2,enc_tri]
+    V3 <- v[3,enc_tri]
+    E1 <- e[1,enc_tri]
+    E2 <- e[2,enc_tri]
+    E3 <- e[3,enc_tri]
     #triangle T
-    v1[enc_tri] <- i
-    v2[enc_tri] <- V1
-    v3[enc_tri] <- V2
+    v[1,enc_tri] <- i
+    v[2,enc_tri] <- V1
+    v[3,enc_tri] <- V2
 
-    e1[enc_tri] <- E1
-    e2[enc_tri] <- numtri+1
-    e3[enc_tri] <- numtri+2
+    e[1,enc_tri] <- E1
+    e[2,enc_tri] <- numtri+1
+    e[3,enc_tri] <- numtri+2
 
+    newcol <- c(0,0,0)
+    v <- cbind(v,newcol)
+    v <- cbind(v,newcol)
+    e <- cbind(e,newcol)
+    e <- cbind(e,newcol)
     #triangle numtri+1
-    v1[numtri+1] <- i
-    v2[numtri+1] <- V2
-    v3[numtri+1] <- V3
 
-    e1[numtri+1] <- enc_tri
-    e2[numtri+1] <- E2
-    e3[numtri+1] <- numtri+2
+    v[1,numtri+1] <- i
+    v[2,numtri+1] <- V2
+    v[3,numtri+1] <- V3
+
+    e[1,numtri+1] <- enc_tri
+    e[2,numtri+1] <- E2
+    e[3,numtri+1] <- numtri+2
 
     #triangle numtri+2
-    v1[numtri+2] <- i
-    v2[numtri+2] <- V3
-    v3[numtri+2] <- V1
+    v[1,numtri+2] <- i
+    v[2,numtri+2] <- V3
+    v[3,numtri+2] <- V1
 
-    e1[numtri+2] <- numtri+1
-    e2[numtri+2] <- E3
-    e3[numtri+2] <- enc_tri
+    e[1,numtri+2] <- numtri+1
+    e[2,numtri+2] <- E3
+    e[3,numtri+2] <- enc_tri
 
 
 
     #stack if the edge opp P is adjacent to some other triangle
-    if(e2[enc_tri] != 0){
+    if(e[2,enc_tri] != 0){
       tstack <- c(enc_tri,tstack)
     }
-    if(e2[numtri+1] != 0){
+    if(e[2,numtri+1] != 0){
       tstack <- c(numtri+1, tstack)
     }
-    if(e2[numtri+2] != 0){
+    if(e[2,numtri+2] != 0){
       tstack <- c(numtri+2,tstack)
     }
   }
@@ -119,7 +130,7 @@ delaun <- function(n,points){
 
 }
 
-triloc <- function(i,x,y,v1,v2,v3,e1,e2,e3){
+triloc <- function(i,x,y,v,e){
   cur.tri = 1
   # arc1 is opposite v1
   triangle.found = FALSE
@@ -127,40 +138,41 @@ triloc <- function(i,x,y,v1,v2,v3,e1,e2,e3){
   Py <- y[i]
   while(!triangle.found){
     #edge1->2
-    Ax <- x[v1[cur.tri]]
-    Ay <- y[v1[cur.tri]]
-    Bx <- x[v2[cur.tri]]
-    By <- y[v2[cur.tri]]
+    Ax <- x[v[1,cur.tri]]
+    Ay <- y[v[1,cur.tri]]
+    Bx <- x[v[2,cur.tri]]
+    By <- y[v[2,cur.tri]]
     lr12 <- left.right(Px,Py,Ax,Ay,Bx,By)
     if(lr12<0){
-      cur.tri <- e1[cur.tri]
+      cur.tri <- e[1,cur.tri]
       next
     }
 
     #edge2->3
-    Ax <- x[v2[cur.tri]]
-    Ay <- y[v2[cur.tri]]
-    Bx <- x[v3[cur.tri]]
-    By <- y[v3[cur.tri]]
+    Ax <- x[v[2,cur.tri]]
+    Ay <- y[v[2,cur.tri]]
+    Bx <- x[v[3,cur.tri]]
+    By <- y[v[3,cur.tri]]
     lr23 <- left.right(Px,Py,Ax,Ay,Bx,By)
     if(lr23<0){
-      cur.tri <- e2[cur.tri]
+      cur.tri <- e[2,cur.tri]
       next
     }
 
     #edge3->1
-    Ax <- x[v3[cur.tri]]
-    Ay <- y[v3[cur.tri]]
-    Bx <- x[v1[cur.tri]]
-    By <- y[v1[cur.tri]]
+    Ax <- x[v[3,cur.tri]]
+    Ay <- y[v[3,cur.tri]]
+    Bx <- x[v[1,cur.tri]]
+    By <- y[v[1,cur.tri]]
     lr31 <- left.right(Px,Py,Ax,Ay,Bx,By)
     if(lr31<0){
-      cur.tri <- e3[cur.tri]
+      cur.tri <- e[3,cur.tri]
       next
     }
 
     return(cur.tri)
   }
+  return(-1)
 }
 
 # if true, new point is inside circumcircle for triangle R

@@ -19,12 +19,17 @@ new_triad <- function(x,y,v,e){
 }
 
 
+<<<<<<< HEAD
 del_tri <- function(x,y=NULL, maxrange=TRUE, ...){
   if(is.null(y)){
+=======
+del_tri <- function(x, y=NULL, ...){
+  if (is.null(y)) {
+>>>>>>> cf925f04778fd32608e0bfa2c46ff542eccbaefc
     x_p <- x$x
     y_p <- x$y
   }
-  else{
+  else {
     x_p <- x
     y_p <- y
   }
@@ -129,6 +134,22 @@ delaun <- function(n, norm_x, norm_y){
   #Lawson's procedure
 
 }
+<<<<<<< HEAD
+#' Check which triangles a point lies within
+#'
+#' This function takes partial triangulation
+#' and checks whether points are inside of
+#' the existing triangles
+#'
+#' @param i row index
+#' @param d tibble with two components, x, y
+#'  giving positions of points to be triangulated
+#' @param v vertices of triangles, columns are triangle
+#'   number and rows are vertices 1, 2, and 3
+#' @param e adjacency of triangles, columns are triangle
+#'   number and rows are ids of adjacent triangles
+#'
+#' @export
 
 triloc <- function(i,x,y,v,e){
   cur.tri = 1

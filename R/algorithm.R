@@ -1,4 +1,4 @@
-retriangulate <- function(nodeset,a,b,triangle_set,reqd_edges){
+#retriangulate <- function(nodeset,a,b,triangle_set,reqd_edges){
   #(1) Define X as the set of elements of nodeset strictly left of a->b and unseparated from the midpoint of a and b by any element of R.
   #If X is not empty:
     #(2) Determine x E X that maximizes angle axb.
@@ -6,8 +6,16 @@ retriangulate <- function(nodeset,a,b,triangle_set,reqd_edges){
     #(4) Delete x from nodeset.
     #(5) If [a, x] not in R, retriangulate (nodeset, a, x, triangle_set, reqd_edges).
     #(6) If [x, b] not in R, retriangulate (nodeset, x, b, triangle_set, reqd_edges).
-}
+#}
 
+#'@title Constructor for the triad class
+#'@description An object which stores the information of all vertices and triangles for the Delaunay Triangulation
+#'@param x X coordinates of points
+#'@param y y coordinates of points
+#'@param v A 2D matrix storing information of vertices that make up a triangle
+#'@param e A 2D matrix storing information of the triangles adjacent to each other
+#'
+#'@export
 new_triad <- function(x,y,v,e){
   triad.obj <- list(
     x=x,
@@ -19,7 +27,14 @@ new_triad <- function(x,y,v,e){
 }
 
 
-del_tri <- function(x,y=NULL, maxrange=TRUE, ...){
+#'@title Implementation of the DELTRI subroutine
+#'@description Calculates the Delaunay Triangulation of the given set of points.
+#'@param x stores the x coordinates of the points. If y is NULL, it is treated as a data.frame
+#'@param y stores the Y coordinates of the points
+#'@param maxrange if TRUE, normalisation is done with max(x range, y range) for both x and y values
+#'
+#'@export
+del_tri <- function(x,y=NULL, maxrange=TRUE){
   if(is.null(y)){
     x_p <- x$x
     y_p <- x$y
@@ -49,13 +64,18 @@ del_tri <- function(x,y=NULL, maxrange=TRUE, ...){
   norm_x <- (x_p - x_min)/x_div
   norm_y <- (y_p - y_min)/x_div
 
-  delaun(n,norm_x, norm_y)
+  delaun(norm_x, norm_y)
 }
 
-
-delaun <- function(n, norm_x, norm_y){
+#'@title Implementation of the DELAUN subroutine
+#'@description Returns a Delaunay Triangulation but with normalised points
+#'@param norm_x Normalised X coordinates of points
+#'@param norm_y NormalisedY coordinates of points
+#'
+delaun <- function(norm_x, norm_y){
   x <- norm_x
   y <- norm_y
+  n <- length(x)
   x <- c(x,-100,100,0)
   y <- c(y,-100,-100,100)
   # v1[i],v2[i],v3[i] are the three vertices of the i'th triangle
@@ -129,19 +149,16 @@ delaun <- function(n, norm_x, norm_y){
   #Lawson's procedure
 
 }
-#' Check which triangles a point lies within
-#'
-#' This function takes partial triangulation
-#' and checks whether points are inside of
-#' the existing triangles
-#'
-#' @param i row index
-#' @param d tibble with two components, x, y
-#'  giving positions of points to be triangulated
-#' @param v vertices of triangles, columns are triangle
-#'   number and rows are vertices 1, 2, and 3
-#' @param e adjacency of triangles, columns are triangle
-#'   number and rows are ids of adjacent triangles
+
+
+
+#'@title Check which triangles a point lies within
+#'@description Returns the index of the triangle which contains the given point
+#'@param i index of the point to be located
+#'@param x X coordinates of points
+#'@param y Y coordinates of points
+#'@param v vertices of triangles, columns are triangle number and rows are vertices 1, 2, and 3
+#'@param e adjacency of triangles, columns are triangle number and rows are ids of adjacent triangles
 #'
 #' @export
 
@@ -191,17 +208,7 @@ triloc <- function(i,x,y,v,e){
 }
 
 # if true, new point is inside circumcircle for triangle R
-swap <- function(){
+#swap <- function(){
 
-}
+#}
 
-
-#checks if P is left or right of A->B
-left.right <- function(Px,Py,Ax,Ay,Bx,By){
-  ABx <- Bx-Ax
-  ABy <- By-Ay
-  APx <- Px-Ax
-  APy <- Py-Ay
-  cross_prod <- ABx*APy - APx*ABy
-  cross_prod
-}

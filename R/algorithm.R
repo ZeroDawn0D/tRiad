@@ -19,13 +19,8 @@ new_triad <- function(x,y,v,e){
 }
 
 
-<<<<<<< HEAD
 del_tri <- function(x,y=NULL, maxrange=TRUE, ...){
   if(is.null(y)){
-=======
-del_tri <- function(x, y=NULL, ...){
-  if (is.null(y)) {
->>>>>>> cf925f04778fd32608e0bfa2c46ff542eccbaefc
     x_p <- x$x
     y_p <- x$y
   }

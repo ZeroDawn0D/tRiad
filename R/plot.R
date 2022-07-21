@@ -20,6 +20,6 @@ plot.triad <- function(x, ...){
       y[v[2,i]],
       y[v[3,i]],
       y[v[1,i]])
-    lines(xplot,yplot)
+    graphics::lines(xplot,yplot)
   }
 }

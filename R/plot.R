@@ -1,3 +1,17 @@
+#x <- c(0,1,-2,3,0,0,1,1,-1,0)
+#y <- c(1,-2,-2,2,6,-1,0,2,0,0)
+#v <- matrix(nrow=3, ncol = 4)
+#e <- matrix(nrow=3, ncol = 4)
+#v[1,] <- c(1,1,1,1)
+#v[2,] <- c(3,2,4,5)
+#v[3,] <- c(2,4,5,3)
+#e[1,] <- c(4,1,2,3)
+#e[2,] <- c(0,0,0,0)
+#e[3,] <- c(2,3,4,1)
+#t <- new_triad(x,y,v,e)
+#plot(t)
+
+
 #'@title plot function for objects of triad class
 #'@description Plots the Delaunay triangulation on passing a triad object
 #'@param x An object of triad class

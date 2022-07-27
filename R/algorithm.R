@@ -8,6 +8,11 @@
     #(6) If [x, b] not in R, retriangulate (nodeset, x, b, triangle_set, reqd_edges).
 #}
 
+
+
+#x <- c(0,10,-20,30,0,10,-10)
+#y <- c(10,-20,-20,20,60,0,0)
+
 #'@title Constructor for the triad class
 #'@description An object which stores the information of all vertices and triangles for the Delaunay Triangulation
 #'@param x X coordinates of points
@@ -35,6 +40,7 @@ new_triad <- function(x,y,v,e){
 #'
 #'@export
 del_tri <- function(x,y=NULL, maxrange=TRUE){
+  print("del_tri()")
   if(is.null(y)){
     x_p <- x$x
     y_p <- x$y
@@ -73,6 +79,7 @@ del_tri <- function(x,y=NULL, maxrange=TRUE){
 #'@param norm_y NormalisedY coordinates of points
 #'
 delaun <- function(norm_x, norm_y){
+  print("delaun()")
   x <- norm_x
   y <- norm_y
   n <- length(x)
@@ -90,7 +97,11 @@ delaun <- function(norm_x, norm_y){
   e <- matrix(c(0,0,0), nrow = 3, ncol = 1)
   ntri = 1
   tstack <- c()
+  triad.obj <- new_triad(x,y,v,e)
+  plot(triad.obj)
+  print("creating v and e")
   for(i in 1:n){
+
     enc_tri <- triloc(i,x,y,v,e)
     numtri <- length(v)/3
     V1 <- v[1,enc_tri]
@@ -144,13 +155,62 @@ delaun <- function(norm_x, norm_y){
     if(e[2,numtri+2] != 0){
       tstack <- c(numtri+2,tstack)
     }
+    triad.obj <- new_triad(x,y,v,e)
+    plot(triad.obj)
   }
 
+  print("Lawson")
   #Lawson's procedure
   while(length(tstack) > 0){
     L <- tstack[-1]
     R <- e[2,L]
     tstack <- tstack[-1]
+    ERL <- edg(e,R,L)
+    ERA <- ERL%%3 + 1
+    ERB <- ERA%%3 + 1
+    V1 <- v[ERL,R]
+    V2 <- v[ERA,R]
+    V3 <- V[ERB,R]
+    P <- -1
+    for(i in 1:3){
+      if(v[i,L]!=V1 && v[i,L] !=V2){
+        P<-v[i,L]
+        break
+      }
+    }
+    if(swap(x,y,P,V1,V2,V3)){
+      A <- e[ERA,R]
+      B <- e[ERB,R]
+      C <- e[3,L]
+
+      #triangle L
+      v[3,L] <- V3
+      e[2,L] <- A
+      e[3,L] <- R
+
+      #triangle R
+      v[1,R] <- P
+      v[2,R] <- V3
+      v[3,R] <- V1
+      e[1,R] <- L
+      e[2,R] <- B
+      e[3,R] <- C
+
+      if(A !=0){
+        e[edg(e,A,R),A] <- L
+        tstack <- c(L,tstack)
+      }
+      if(B != 0){
+        tstack <- c(R,tstack)
+      }
+      if(C != 0){
+        e[edg(e,C,L),C] <- R
+      }
+    }
+    ntri <- length(v)/3
+    if(ntri != 2*n+1){
+      print('incorrect number of triangles formed')
+    }
   }
 }
 
@@ -167,12 +227,18 @@ delaun <- function(norm_x, norm_y){
 #' @export
 
 triloc <- function(i,x,y,v,e){
+  print("triloc()")
   cur.tri = 1
   # arc1 is opposite v1
   triangle.found = FALSE
   Px <- x[i]
   Py <- y[i]
+  print(Px)
+  print(Py)
+  print(v)
+  print(e)
   while(!triangle.found){
+
     #edge1->2
     Ax <- x[v[1,cur.tri]]
     Ay <- y[v[1,cur.tri]]
@@ -206,6 +272,8 @@ triloc <- function(i,x,y,v,e){
       next
     }
 
+    print("triangle found:")
+    print(cur.tri)
     return(cur.tri)
   }
   return(-1)
@@ -221,7 +289,8 @@ triloc <- function(i,x,y,v,e){
 #'@param V2 Index number of point V2
 #'@param V3 Index number of point V3
 #'
-swap <- function(x,y,P,V2,V1,V3){
+swap <- function(x,y,P,V1,V2,V3){
+  print("swap()")
   xp <- x[P]
   yp <- y[P]
   x1 <- x[V1]
@@ -262,3 +331,18 @@ swap <- function(x,y,P,V2,V1,V3){
   return(FALSE)
 }
 
+#'@title Implementation of the EDG subroutine
+#'@description returns which edge of I is adjacent to J
+#'
+#'@param e List of adjacent triangles
+#'@param I index of triangle I
+#'@param J index of triangle J
+edg <- function(e,I,J){
+  print("edge()")
+  for(i in 1:3){
+    if(e[i,I] == J){
+      return(i)
+    }
+  }
+  return(-1)
+}

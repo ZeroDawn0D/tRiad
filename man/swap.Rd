@@ -4,7 +4,7 @@
 \alias{swap}
 \title{Implementation of the SWAP subroutine}
 \usage{
-swap(x, y, P, V2, V1, V3)
+swap(x, y, P, V1, V2, V3)
 }
 \arguments{
 \item{x}{X coordinates of points}
@@ -13,9 +13,9 @@ swap(x, y, P, V2, V1, V3)
 
 \item{P}{Index number of point P}
 
-\item{V2}{Index number of point V2}
-
 \item{V1}{Index number of point V1}
+
+\item{V2}{Index number of point V2}
 
 \item{V3}{Index number of point V3}
 }

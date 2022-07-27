@@ -147,7 +147,11 @@ delaun <- function(norm_x, norm_y){
   }
 
   #Lawson's procedure
-
+  while(length(tstack) > 0){
+    L <- tstack[-1]
+    R <- e[2,L]
+    tstack <- tstack[-1]
+  }
 }
 
 
@@ -207,8 +211,54 @@ triloc <- function(i,x,y,v,e){
   return(-1)
 }
 
-# if true, new point is inside circumcircle for triangle R
-#swap <- function(){
+#'@title Implementation of the SWAP subroutine
+#'@description Checks to see if triangle P-V2-V1 and V3-V1-V2 need to swap common edge
+#'
+#'@param x X coordinates of points
+#'@param y Y coordinates of points
+#'@param P Index number of point P
+#'@param V1 Index number of point V1
+#'@param V2 Index number of point V2
+#'@param V3 Index number of point V3
+#'
+swap <- function(x,y,P,V2,V1,V3){
+  xp <- x[P]
+  yp <- y[P]
+  x1 <- x[V1]
+  y1 <- y[V1]
+  x2 <- x[V2]
+  y2 <- y[V2]
+  x3 <- x[V3]
+  y3 <- y[V3]
 
-#}
+  x13 <- x1 - x3
+  x23 <- x1 - xp
+  x1p <- x1 - xp
+  x2p <- x2 - xp
+  y13 <- y1 - y3
+  y23 <- y2 - y3
+  y1p <- y1 - yp
+  y2p <- y2 - yp
+
+  cosa <- x13*x23 + y13*y23
+  cosb <- x2p*x1p + y2p*y1p
+
+  if(cosa >= 0 && cosb>=0){
+    return(FALSE)
+  }
+
+  if(cosa<0 && cosb<0){
+    return(TRUE)
+  }
+
+  sina <- x13*y23 - x23*y13
+  sinb <- x2p*y1p - x1p*y2p
+  sinab <- sina*cosb + sinb*cosa
+
+  if(sinab < 0){
+    return(TRUE)
+  }
+
+  return(FALSE)
+}
 

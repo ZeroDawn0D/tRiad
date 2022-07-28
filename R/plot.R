@@ -22,6 +22,9 @@ plot.triad <- function(x, ...){
   v <- x$v
   x <- x$x
   plot(x, y, ...)
+  n<-length(y)
+  text(x,y,1:n, pos = 3)
+
   ntri <- length(v)/3
   for(i in 1:ntri){
     xplot <- c(

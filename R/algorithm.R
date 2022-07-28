@@ -10,8 +10,8 @@
 
 
 
-#x <- c(0,10,-20,30,0,10,-10)
-#y <- c(10,-20,-20,20,60,0,0)
+x <- c(0,10,-20,30,10,-10)
+y <- c(10,-20,-20,20,0,0)
 
 #'@title Constructor for the triad class
 #'@description An object which stores the information of all vertices and triangles for the Delaunay Triangulation
@@ -79,7 +79,6 @@ del_tri <- function(x,y=NULL, maxrange=TRUE){
 #'@param norm_y NormalisedY coordinates of points
 #'
 delaun <- function(norm_x, norm_y){
-  print("delaun()")
   x <- norm_x
   y <- norm_y
   n <- length(x)
@@ -99,7 +98,7 @@ delaun <- function(norm_x, norm_y){
   tstack <- c()
   triad.obj <- new_triad(x,y,v,e)
   plot(triad.obj)
-  print("creating v and e")
+
   for(i in 1:n){
 
     enc_tri <- triloc(i,x,y,v,e)
@@ -235,17 +234,21 @@ triloc <- function(i,x,y,v,e){
   Py <- y[i]
   print(Px)
   print(Py)
-  print(v)
-  print(e)
-  while(!triangle.found){
 
+  print("triangle")
+  print(v)
+  while(!triangle.found){
+    #print("current triangle")
+    #print(cur.tri)
     #edge1->2
     Ax <- x[v[1,cur.tri]]
     Ay <- y[v[1,cur.tri]]
     Bx <- x[v[2,cur.tri]]
     By <- y[v[2,cur.tri]]
     lr12 <- left.right(Px,Py,Ax,Ay,Bx,By)
+
     if(lr12<0){
+      #print("going right of edge 1-2")
       cur.tri <- e[1,cur.tri]
       next
     }
@@ -257,6 +260,7 @@ triloc <- function(i,x,y,v,e){
     By <- y[v[3,cur.tri]]
     lr23 <- left.right(Px,Py,Ax,Ay,Bx,By)
     if(lr23<0){
+      #print("going right of edge 2-3")
       cur.tri <- e[2,cur.tri]
       next
     }
@@ -268,12 +272,13 @@ triloc <- function(i,x,y,v,e){
     By <- y[v[1,cur.tri]]
     lr31 <- left.right(Px,Py,Ax,Ay,Bx,By)
     if(lr31<0){
+      #print("going right of edge 3-1")
       cur.tri <- e[3,cur.tri]
       next
     }
 
-    print("triangle found:")
-    print(cur.tri)
+    #print("triangle found:")
+    #print(cur.tri)
     return(cur.tri)
   }
   return(-1)

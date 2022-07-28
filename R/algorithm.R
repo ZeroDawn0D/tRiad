@@ -85,14 +85,8 @@ delaun <- function(norm_x, norm_y){
   x <- c(x,-100,100,0)
   y <- c(y,-100,-100,100)
   # v1[i],v2[i],v3[i] are the three vertices of the i'th triangle
-  v1 <- c(n+1)
-  v2 <- c(n+2)
-  v3 <- c(n+3)
   v <- matrix(c(n+1,n+2,n+3), nrow = 3, ncol = 1)
   # e1,e2,e3 are the adj tri of ith triangle
-  e1 <- c(0)
-  e2 <- c(0)
-  e3 <- c(0)
   e <- matrix(c(0,0,0), nrow = 3, ncol = 1)
   ntri = 1
   tstack <- c()
@@ -102,6 +96,8 @@ delaun <- function(norm_x, norm_y){
   for(i in 1:n){
 
     enc_tri <- triloc(i,x,y,v,e)
+    cat("Point ", i, " found in triangle ", enc_tri)
+    readline(prompt="Press [enter] to continue")
     numtri <- length(v)/3
     V1 <- v[1,enc_tri]
     V2 <- v[2,enc_tri]
@@ -114,9 +110,9 @@ delaun <- function(norm_x, norm_y){
     v[2,enc_tri] <- V1
     v[3,enc_tri] <- V2
 
-    e[1,enc_tri] <- E1
-    e[2,enc_tri] <- numtri+1
-    e[3,enc_tri] <- numtri+2
+    e[1,enc_tri] <- numtri+2
+    e[2,enc_tri] <- E1
+    e[3,enc_tri] <- numtri+1
 
     newcol <- c(0,0,0)
     v <- cbind(v,newcol)
@@ -156,6 +152,7 @@ delaun <- function(norm_x, norm_y){
     }
     triad.obj <- new_triad(x,y,v,e)
     plot(triad.obj)
+
   }
 
   print("Lawson")
@@ -226,17 +223,17 @@ delaun <- function(norm_x, norm_y){
 #' @export
 
 triloc <- function(i,x,y,v,e){
-  print("triloc()")
+
   cur.tri = 1
   # arc1 is opposite v1
   triangle.found = FALSE
   Px <- x[i]
   Py <- y[i]
-  print(Px)
-  print(Py)
-
-  print("triangle")
+  cat("Searching for point ", i, "\n")
+  cat("Current state of v")
   print(v)
+  cat("Current state of e")
+  print(e)
   while(!triangle.found){
     #print("current triangle")
     #print(cur.tri)

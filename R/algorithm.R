@@ -139,16 +139,18 @@ delaun <- function(norm_x, norm_y){
     e[3,numtri+2] <- enc_tri
 
 
-
+    numtri <- numtri+2
     #stack if the edge opp P is adjacent to some other triangle
-    if(e[2,enc_tri] != 0){
+    if(E1 != 0){
       tstack <- c(enc_tri,tstack)
     }
-    if(e[2,numtri+1] != 0){
-      tstack <- c(numtri+1, tstack)
+    if(E2 != 0){
+      e[edg(e,E2,enc_tri), E2] <- numtri-1
+      tstack <- c(numtri-1, tstack)
     }
-    if(e[2,numtri+2] != 0){
-      tstack <- c(numtri+2,tstack)
+    if(E3 != 0){
+      e[edg(e,E3,enc_tri), E3] <- numtri
+      tstack <- c(numtri,tstack)
     }
     triad.obj <- new_triad(x,y,v,e)
     plot(triad.obj)
@@ -163,13 +165,14 @@ delaun <- function(norm_x, norm_y){
   print("Lawson")
   #Lawson's procedure
   while(length(tstack) > 0){
+    cat("Current Stack: ", tstack, "\n")
     L <- tstack[1]
     R <- e[2,L]
     tstack <- tstack[-1]
     ERL <- edg(e,R,L)
     ERA <- ERL%%3 + 1
     ERB <- ERA%%3 + 1
-    cat(ERL,",",ERA,",",ERB)
+    cat(ERL,",",ERA,",",ERB,"\n")
     V1 <- v[ERL,R]
     V2 <- v[ERA,R]
     V3 <- v[ERB,R]
@@ -179,6 +182,9 @@ delaun <- function(norm_x, norm_y){
         P<-v[i,L]
         break
       }
+    }
+    if(P==-1){
+      print("P is negative")
     }
     if(swap(x,y,P,V1,V2,V3)){
       print("swap true")
@@ -194,7 +200,6 @@ delaun <- function(norm_x, norm_y){
       #triangle R
       v[1,R] <- P
       v[2,R] <- V3
-      print(V1)
       v[3,R] <- V1
       e[1,R] <- L
       e[2,R] <- B
@@ -211,13 +216,37 @@ delaun <- function(norm_x, norm_y){
         e[edg(e,C,L),C] <- R
       }
       readline(prompt="Press [enter] to continue")
+      triad.obj <- new_triad(x,y,v,e)
       plot(triad.obj)
     }
     ntri <- length(v)/3
-    if(ntri != 2*n+1){
-      print('incorrect number of triangles formed')
+  }
+
+  if(ntri != 2*n+1){
+    print('incorrect number of triangles formed')
+  }
+  cat("number of triangles:",ntri, "\n")
+  t <- 1
+  while(t <= ntri){
+    cat("t: ",t," ntri: ",ntri,"\n")
+    if(v[1,t] > n || v[2,t] > n || v[3,t] > n){
+      for(i in 1:3){
+        A <- e[i,t]
+        if(A>0){
+          cat("A: ", A, "t: ",t,"\n")
+          e[edg(e,A,t), A] <- 0
+        }
+      }
+      e <- e[,-t]
+      v <- v[,-t]
+      ntri <- ntri-1
+    }
+    else{
+      t <- t+1
     }
   }
+  triad.obj <- new_triad(x,y,v,e)
+  plot(triad.obj)
 }
 
 
@@ -240,9 +269,9 @@ triloc <- function(i,x,y,v,e){
   Px <- x[i]
   Py <- y[i]
   cat("Searching for point ", i, "\n")
-  cat("Current state of v")
+  print("Current state of v")
   print(v)
-  cat("Current state of e")
+  print("Current state of e")
   print(e)
   while(!triangle.found){
     #edge1->2
@@ -342,16 +371,12 @@ swap <- function(x,y,P,V1,V2,V3){
 #'@param I index of triangle I
 #'@param J index of triangle J
 edg <- function(e,I,J){
-  print("edge()")
-  print(I)
-  print(J)
+  cat("I: ",I,"\n")
   for(i in 1:3){
-    cat(e[i,I],",")
     if(e[i,I] == J){
       return(i)
     }
   }
-  cat("\n")
   print("unexpected edg output")
   return(-1)
 }

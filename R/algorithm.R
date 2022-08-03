@@ -155,18 +155,24 @@ delaun <- function(norm_x, norm_y){
 
   }
 
+  print("Current state of V")
+  print(v)
+
+  print("Current state of E")
+  print(e)
   print("Lawson")
   #Lawson's procedure
   while(length(tstack) > 0){
-    L <- tstack[-1]
+    L <- tstack[1]
     R <- e[2,L]
     tstack <- tstack[-1]
     ERL <- edg(e,R,L)
     ERA <- ERL%%3 + 1
     ERB <- ERA%%3 + 1
+    cat(ERL,",",ERA,",",ERB)
     V1 <- v[ERL,R]
     V2 <- v[ERA,R]
-    V3 <- V[ERB,R]
+    V3 <- v[ERB,R]
     P <- -1
     for(i in 1:3){
       if(v[i,L]!=V1 && v[i,L] !=V2){
@@ -175,6 +181,7 @@ delaun <- function(norm_x, norm_y){
       }
     }
     if(swap(x,y,P,V1,V2,V3)){
+      print("swap true")
       A <- e[ERA,R]
       B <- e[ERB,R]
       C <- e[3,L]
@@ -187,6 +194,7 @@ delaun <- function(norm_x, norm_y){
       #triangle R
       v[1,R] <- P
       v[2,R] <- V3
+      print(V1)
       v[3,R] <- V1
       e[1,R] <- L
       e[2,R] <- B
@@ -202,6 +210,8 @@ delaun <- function(norm_x, norm_y){
       if(C != 0){
         e[edg(e,C,L),C] <- R
       }
+      readline(prompt="Press [enter] to continue")
+      plot(triad.obj)
     }
     ntri <- length(v)/3
     if(ntri != 2*n+1){
@@ -235,8 +245,6 @@ triloc <- function(i,x,y,v,e){
   cat("Current state of e")
   print(e)
   while(!triangle.found){
-    #print("current triangle")
-    #print(cur.tri)
     #edge1->2
     Ax <- x[v[1,cur.tri]]
     Ay <- y[v[1,cur.tri]]
@@ -245,7 +253,6 @@ triloc <- function(i,x,y,v,e){
     lr12 <- left.right(Px,Py,Ax,Ay,Bx,By)
 
     if(lr12<0){
-      #print("going right of edge 1-2")
       cur.tri <- e[1,cur.tri]
       next
     }
@@ -257,7 +264,6 @@ triloc <- function(i,x,y,v,e){
     By <- y[v[3,cur.tri]]
     lr23 <- left.right(Px,Py,Ax,Ay,Bx,By)
     if(lr23<0){
-      #print("going right of edge 2-3")
       cur.tri <- e[2,cur.tri]
       next
     }
@@ -269,13 +275,9 @@ triloc <- function(i,x,y,v,e){
     By <- y[v[1,cur.tri]]
     lr31 <- left.right(Px,Py,Ax,Ay,Bx,By)
     if(lr31<0){
-      #print("going right of edge 3-1")
       cur.tri <- e[3,cur.tri]
       next
     }
-
-    #print("triangle found:")
-    #print(cur.tri)
     return(cur.tri)
   }
   return(-1)
@@ -341,10 +343,15 @@ swap <- function(x,y,P,V1,V2,V3){
 #'@param J index of triangle J
 edg <- function(e,I,J){
   print("edge()")
+  print(I)
+  print(J)
   for(i in 1:3){
+    cat(e[i,I],",")
     if(e[i,I] == J){
       return(i)
     }
   }
+  cat("\n")
+  print("unexpected edg output")
   return(-1)
 }

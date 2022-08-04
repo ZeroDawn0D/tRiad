@@ -173,6 +173,8 @@ delaun <- function(norm_x, norm_y){
     R <- e[2,L]
     tstack <- tstack[-1]
     cat("popping ", L, "\n")
+    cat("Vertices of Triangle L: ",v[1,L]," ",v[2,L]," ",v[3,L],"\n")
+    cat("Vertices of Triangle R: ",v[1,R]," ",v[2,R]," ",v[3,R],"\n")
     ERL <- edg(e,R,L)
     ERA <- ERL%%3 + 1
     ERB <- ERA%%3 + 1
@@ -268,6 +270,7 @@ delaun <- function(norm_x, norm_y){
   }
 
   print("last plot")
+  readline(prompt="Press [enter] to continue")
   triad.obj <- new_triad(x,y,v,e)
   plot(triad.obj)
 }
@@ -346,7 +349,6 @@ triloc <- function(i,x,y,v,e){
 #'@param V3 Index number of point V3
 #'
 swap <- function(x,y,P,V1,V2,V3){
-  print("swap()")
   xp <- x[P]
   yp <- y[P]
   x1 <- x[V1]

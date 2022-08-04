@@ -142,14 +142,17 @@ delaun <- function(norm_x, norm_y){
     numtri <- numtri+2
     #stack if the edge opp P is adjacent to some other triangle
     if(E1 != 0){
+      cat("pushing ", enc_tri, "\n")
       tstack <- c(enc_tri,tstack)
     }
     if(E2 != 0){
       e[edg(e,E2,enc_tri), E2] <- numtri-1
+      cat("pushing ", numtri-1, "\n")
       tstack <- c(numtri-1, tstack)
     }
     if(E3 != 0){
       e[edg(e,E3,enc_tri), E3] <- numtri
+      cat("pushing ", numtri, "\n")
       tstack <- c(numtri,tstack)
     }
     triad.obj <- new_triad(x,y,v,e)
@@ -169,10 +172,10 @@ delaun <- function(norm_x, norm_y){
     L <- tstack[1]
     R <- e[2,L]
     tstack <- tstack[-1]
+    cat("popping ", L, "\n")
     ERL <- edg(e,R,L)
     ERA <- ERL%%3 + 1
     ERB <- ERA%%3 + 1
-    cat(ERL,",",ERA,",",ERB,"\n")
     V1 <- v[ERL,R]
     V2 <- v[ERA,R]
     V3 <- v[ERB,R]
@@ -207,9 +210,11 @@ delaun <- function(norm_x, norm_y){
 
       if(A !=0){
         e[edg(e,A,R),A] <- L
+        cat("pushing ", L, "\n")
         tstack <- c(L,tstack)
       }
       if(B != 0){
+        cat("pushing ", R, "\n")
         tstack <- c(R,tstack)
       }
       if(C != 0){
@@ -225,26 +230,44 @@ delaun <- function(norm_x, norm_y){
   if(ntri != 2*n+1){
     print('incorrect number of triangles formed')
   }
+  ntri <- length(v)/3
   cat("number of triangles:",ntri, "\n")
-  t <- 1
-  while(t <= ntri){
-    cat("t: ",t," ntri: ",ntri,"\n")
-    if(v[1,t] > n || v[2,t] > n || v[3,t] > n){
+  for(t in 1:ntri){
+    if(v[1,t]>n || v[2,t]>n || v[3,t]>n){
       for(i in 1:3){
         A <- e[i,t]
-        if(A>0){
-          cat("A: ", A, "t: ",t,"\n")
-          e[edg(e,A,t), A] <- 0
+        if(A!=0){
+          e[edg(e,A,t),A] <- 0
         }
       }
-      e <- e[,-t]
-      v <- v[,-t]
-      ntri <- ntri-1
-    }
-    else{
-      t <- t+1
+      break
     }
   }
+  tstrt <- t+1
+  tstop <- ntri
+  ntri <- t-1
+  for(t in tstrt:tstop){
+    if(v[1,t]>n || v[2,t]>n || v[3,t]>n){
+      for(i in 1:3){
+        A <- e[i,t]
+        if(A!=0){
+          e[edg(e,A,t),A] <- 0
+        }
+      }
+    }else{
+      ntri <- ntri+1
+      for(i in 1:3){
+        A <- e[i,t]
+        e[i,ntri] <- A
+        v[i,ntri] <- v[i,t]
+        if(A!=0){
+          e[edg(e,A,t),A] <- ntri
+        }
+      }
+    }
+  }
+
+  print("last plot")
   triad.obj <- new_triad(x,y,v,e)
   plot(triad.obj)
 }
@@ -371,7 +394,6 @@ swap <- function(x,y,P,V1,V2,V3){
 #'@param I index of triangle I
 #'@param J index of triangle J
 edg <- function(e,I,J){
-  cat("I: ",I,"\n")
   for(i in 1:3){
     if(e[i,I] == J){
       return(i)

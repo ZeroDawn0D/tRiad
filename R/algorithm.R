@@ -173,6 +173,8 @@ delaun <- function(norm_x, norm_y){
     R <- e[2,L]
     tstack <- tstack[-1]
     cat("popping ", L, "\n")
+    cat("L: ",L)
+    cat(" R:",R,"\n" )
     cat("Vertices of Triangle L: ",v[1,L]," ",v[2,L]," ",v[3,L],"\n")
     cat("Vertices of Triangle R: ",v[1,R]," ",v[2,R]," ",v[3,R],"\n")
     ERL <- edg(e,R,L)
@@ -271,6 +273,7 @@ delaun <- function(norm_x, norm_y){
 
   print("last plot")
   readline(prompt="Press [enter] to continue")
+  print(v)
   triad.obj <- new_triad(x,y,v,e)
   plot(triad.obj)
 }

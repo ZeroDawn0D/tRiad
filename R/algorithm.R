@@ -21,12 +21,11 @@ y <- c(10,-20,-20,20,0,0)
 #'@param e A 2D matrix storing information of the triangles adjacent to each other
 #'
 #'@export
-new_triad <- function(x,y,v,e){
+new_triad <- function(x,y,v){
   triad.obj <- list(
     x=x,
     y=y,
-    v=v,
-    e=e)
+    v=v)
   class(triad.obj) <- "triad"
   triad.obj
 }
@@ -40,7 +39,6 @@ new_triad <- function(x,y,v,e){
 #'
 #'@export
 del_tri <- function(x,y=NULL, maxrange=TRUE){
-  print("del_tri()")
   if(is.null(y)){
     x_p <- x$x
     y_p <- x$y
@@ -68,9 +66,10 @@ del_tri <- function(x,y=NULL, maxrange=TRUE){
     y_div <- y_range
   }
   norm_x <- (x_p - x_min)/x_div
-  norm_y <- (y_p - y_min)/x_div
-
-  delaun(norm_x, norm_y)
+  norm_y <- (y_p - y_min)/y_div
+  v <- delaun(norm_x, norm_y)
+  triad.obj <- new_triad(x_p, y_p, v)
+  return(triad.obj)
 }
 
 #'@title Implementation of the DELAUN subroutine
@@ -81,201 +80,167 @@ del_tri <- function(x,y=NULL, maxrange=TRUE){
 delaun <- function(norm_x, norm_y){
   x <- norm_x
   y <- norm_y
-  n <- length(x)
-  x <- c(x,-100,100,0)
-  y <- c(y,-100,-100,100)
-  # v1[i],v2[i],v3[i] are the three vertices of the i'th triangle
-  v <- matrix(c(n+1,n+2,n+3), nrow = 3, ncol = 1)
-  # e1,e2,e3 are the adj tri of ith triangle
-  e <- matrix(c(0,0,0), nrow = 3, ncol = 1)
-  ntri = 1
+  numpts <- length(x)
+  x <- c(x,0,0,0)
+  y <- c(y,0,0,0)
+
+  #define vertex and adjacency list
+  v <- matrix(nrow=3)
+  v1 <- numpts+1
+  v2 <- numpts+2
+  v3 <- numpts+3
+  v[1,1] <- v1
+  v[2,1] <- v2
+  v[3,1] <- v3
+
+  e <- matrix(nrow=3)
+  e[1,1] <- 0
+  e[2,1] <- 0
+  e[3,1] <- 0
+
+  #set coords of supertriangle
+  x[v1] <- -100
+  x[v2] <- 100
+  x[v3] <- 0
+
+  y[v1] <- -100
+  y[v2] <- -100
+  y[v3] <- 100
+
+  #loop over each point
+  numtri <- 1
   tstack <- c()
-  triad.obj <- new_triad(x,y,v,e)
-  plot(triad.obj)
+  for(i in 1:numpts){
+    xp <- x[i]
+    yp <- y[i]
+    #locate triangle in which point lies
+    t <- triloc(i,x,y,v,e)
 
-  for(i in 1:n){
+    #create new vertex and adjacency list for triangle t
+    a <- e[1,t]
+    b <- e[2,t]
+    c <- e[3,t]
 
-    enc_tri <- triloc(i,x,y,v,e)
-    cat("Point ", i, " found in triangle ", enc_tri)
-    readline(prompt="Press [enter] to continue")
-    numtri <- length(v)/3
-    V1 <- v[1,enc_tri]
-    V2 <- v[2,enc_tri]
-    V3 <- v[3,enc_tri]
-    E1 <- e[1,enc_tri]
-    E2 <- e[2,enc_tri]
-    E3 <- e[3,enc_tri]
-    #triangle T
-    v[1,enc_tri] <- i
-    v[2,enc_tri] <- V1
-    v[3,enc_tri] <- V2
+    v1 <- v[1,t]
+    v2 <- v[2,t]
+    v3 <- v[3,t]
+    v[1,t] <- i
+    v[2,t] <- v1
+    v[3,t] <- v2
+    e[1,t] <- numtri+2
+    e[2,t] <- a
+    e[3,t] <- numtri+1
 
-    e[1,enc_tri] <- numtri+2
-    e[2,enc_tri] <- E1
-    e[3,enc_tri] <- numtri+1
-
+    #create new triangles
     newcol <- c(0,0,0)
     v <- cbind(v,newcol)
     v <- cbind(v,newcol)
     e <- cbind(e,newcol)
     e <- cbind(e,newcol)
-    #triangle numtri+1
 
-    v[1,numtri+1] <- i
-    v[2,numtri+1] <- V2
-    v[3,numtri+1] <- V3
+    numtri <- numtri+1
+    v[1,numtri] <- i
+    v[2,numtri] <- v2
+    v[3,numtri] <- v3
+    e[1,numtri] <- t
+    e[2,numtri] <- b
+    e[3,numtri] <- numtri+1
 
-    e[1,numtri+1] <- enc_tri
-    e[2,numtri+1] <- E2
-    e[3,numtri+1] <- numtri+2
-
-    #triangle numtri+2
-    v[1,numtri+2] <- i
-    v[2,numtri+2] <- V3
-    v[3,numtri+2] <- V1
-
-    e[1,numtri+2] <- numtri+1
-    e[2,numtri+2] <- E3
-    e[3,numtri+2] <- enc_tri
-
-
-    numtri <- numtri+2
-    #stack if the edge opp P is adjacent to some other triangle
-    if(E1 != 0){
-      cat("pushing ", enc_tri, "\n")
-      tstack <- c(enc_tri,tstack)
+    numtri <- numtri+1
+    v[1,numtri] <- i
+    v[2,numtri] <- v3
+    v[3,numtri] <- v1
+    e[1,numtri] <- numtri-1
+    e[2,numtri] <- c
+    e[3,numtri] <- t
+    #put each edge of triangle t on stack
+    #store triangles on left side of each edge
+    #update adjacency lists for adjacent triangles
+    #adjacency list for element a does not need to be updated
+    if(a!=0){
+      tstack <- c(t, tstack)
     }
-    if(E2 != 0){
-      e[edg(e,E2,enc_tri), E2] <- numtri-1
-      cat("pushing ", numtri-1, "\n")
-      tstack <- c(numtri-1, tstack)
+    if(b!=0){
+      e[edg(b,t,e),b] <- numtri-1
+      tstack <- c(numtri-1,tstack)
+
     }
-    if(E3 != 0){
-      e[edg(e,E3,enc_tri), E3] <- numtri
-      cat("pushing ", numtri, "\n")
+    if(c!=0){
+      e[edg(c,t,e),c] <- numtri
       tstack <- c(numtri,tstack)
     }
-    triad.obj <- new_triad(x,y,v,e)
-    plot(triad.obj)
+    #loop while stack is not empty
+    while(length(tstack) > 0){
+      l <- tstack[1]
+      tstack <- tstack[-1]
+      r <- e[2,l]
+      #check if new point is in circumcircle for triangle r
+      erl <- edg(r,l,e)
+      era <- erl %% 3 + 1
+      erb <- era %% 3 + 1
+      v1 <- v[erl,r]
+      v2 <- v[era,r]
+      v3 <- v[erb,r]
+      swap.true <- swap(x[v1],y[v1],
+                        x[v2],y[v2],
+                        x[v3],y[v3],
+                        xp,yp)
+      if(swap.true){
+        #new point is inside circumcircle for triangle r
+        #swap diagonal for convex quad formed by P-V2-V3-V1
+        a <- e[era,r]
+        b <- e[erb,r]
+        c <- e[3,l]
+        # update vertex amd adjacency list for triangle l
+        v[3,l] <- v3
+        e[2,l] <- a
+        e[3,l] <- r
+        #update vertex and adjacency list for triangle r
+        v[1,r] <- i
+        v[2,r] <- v3
+        v[3,r] <- v1
+        e[1,r] <- l
+        e[2,r] <- b
+        e[3,r] <- c
 
-  }
-
-  print("Current state of V")
-  print(v)
-
-  print("Current state of E")
-  print(e)
-  print("Lawson")
-  #Lawson's procedure
-  while(length(tstack) > 0){
-    cat("Current Stack: ", tstack, "\n")
-    L <- tstack[1]
-    R <- e[2,L]
-    tstack <- tstack[-1]
-    cat("popping ", L, "\n")
-    cat("L: ",L)
-    cat(" R:",R,"\n" )
-    cat("Vertices of Triangle L: ",v[1,L]," ",v[2,L]," ",v[3,L],"\n")
-    cat("Vertices of Triangle R: ",v[1,R]," ",v[2,R]," ",v[3,R],"\n")
-    ERL <- edg(e,R,L)
-    ERA <- ERL%%3 + 1
-    ERB <- ERA%%3 + 1
-    V1 <- v[ERL,R]
-    V2 <- v[ERA,R]
-    V3 <- v[ERB,R]
-    P <- -1
-    for(i in 1:3){
-      if(v[i,L]!=V1 && v[i,L] !=V2){
-        P<-v[i,L]
-        break
-      }
-    }
-    if(P==-1){
-      print("P is negative")
-    }
-    if(swap(x,y,P,V1,V2,V3)){
-      print("swap true")
-      A <- e[ERA,R]
-      B <- e[ERB,R]
-      C <- e[3,L]
-
-      #triangle L
-      v[3,L] <- V3
-      e[2,L] <- A
-      e[3,L] <- R
-
-      #triangle R
-      v[1,R] <- P
-      v[2,R] <- V3
-      v[3,R] <- V1
-      e[1,R] <- L
-      e[2,R] <- B
-      e[3,R] <- C
-
-      if(A !=0){
-        e[edg(e,A,R),A] <- L
-        cat("pushing ", L, "\n")
-        tstack <- c(L,tstack)
-      }
-      if(B != 0){
-        cat("pushing ", R, "\n")
-        tstack <- c(R,tstack)
-      }
-      if(C != 0){
-        e[edg(e,C,L),C] <- R
-      }
-      readline(prompt="Press [enter] to continue")
-      triad.obj <- new_triad(x,y,v,e)
-      plot(triad.obj)
-    }
-    ntri <- length(v)/3
-  }
-
-  if(ntri != 2*n+1){
-    print('incorrect number of triangles formed')
-  }
-  ntri <- length(v)/3
-  cat("number of triangles:",ntri, "\n")
-  for(t in 1:ntri){
-    if(v[1,t]>n || v[2,t]>n || v[3,t]>n){
-      for(i in 1:3){
-        A <- e[i,t]
-        if(A!=0){
-          e[edg(e,A,t),A] <- 0
+        #put edges l-a and r-b on stack
+        #update adjacency lists for triangles a and c
+        if(a!=0){
+          e[edg(a,r,e),a] <- l
+          tstack <- c(l,tstack)
         }
-      }
-      break
-    }
-  }
-  tstrt <- t+1
-  tstop <- ntri
-  ntri <- t-1
-  for(t in tstrt:tstop){
-    if(v[1,t]>n || v[2,t]>n || v[3,t]>n){
-      for(i in 1:3){
-        A <- e[i,t]
-        if(A!=0){
-          e[edg(e,A,t),A] <- 0
+        if(b!=0){
+          tstack <- c(r,tstack)
         }
-      }
-    }else{
-      ntri <- ntri+1
-      for(i in 1:3){
-        A <- e[i,t]
-        e[i,ntri] <- A
-        v[i,ntri] <- v[i,t]
-        if(A!=0){
-          e[edg(e,A,t),A] <- ntri
+        if(c!=0){
+          e[edg(c,l,e),c] <- r
         }
       }
     }
   }
 
-  print("last plot")
-  readline(prompt="Press [enter] to continue")
-  print(v)
-  triad.obj <- new_triad(x,y,v,e)
-  plot(triad.obj)
+  #check consistency of triangulation
+  if(numtri!= 2*numpts+1){
+    print("Incorrect number of triangles formed")
+  }
+
+  #numtri <- length(v)/3
+  t <- 1
+  while(t <= numtri){
+    if(v[1,t] > numpts || v[2,t] > numpts || v[3,t] > numpts){
+      v <- v[,-t]
+      numtri <- numtri-1
+    }
+    else{
+     t<-t+1
+    }
+  }
+  #x <- x[c(-numpts-1, -numpts-2, -numpts-3)]
+  #y <- y[c(-numpts-1, -numpts-2, -numpts-3)]
+
+  #triad.obj <- new_triad(x,y,v,e)
+
+  return(v)
 }
 
 
@@ -297,11 +262,6 @@ triloc <- function(i,x,y,v,e){
   triangle.found = FALSE
   Px <- x[i]
   Py <- y[i]
-  cat("Searching for point ", i, "\n")
-  print("Current state of v")
-  print(v)
-  print("Current state of e")
-  print(e)
   while(!triangle.found){
     #edge1->2
     Ax <- x[v[1,cur.tri]]
@@ -351,45 +311,31 @@ triloc <- function(i,x,y,v,e){
 #'@param V2 Index number of point V2
 #'@param V3 Index number of point V3
 #'
-swap <- function(x,y,P,V1,V2,V3){
-  xp <- x[P]
-  yp <- y[P]
-  x1 <- x[V1]
-  y1 <- y[V1]
-  x2 <- x[V2]
-  y2 <- y[V2]
-  x3 <- x[V3]
-  y3 <- y[V3]
+swap <- function(x1, y1, x2, y2, x3, y3, xp, yp){
 
-  x13 <- x1 - x3
-  x23 <- x1 - xp
+  #angle between vector p->1 and p->2
   x1p <- x1 - xp
-  x2p <- x2 - xp
-  y13 <- y1 - y3
-  y23 <- y2 - y3
   y1p <- y1 - yp
+  x2p <- x2 - xp
   y2p <- y2 - yp
+  dot.1p.2p <- x1p*x2p + y1p*y2p
+  mod1p <- sqrt(x1p*x1p + y1p*y1p)
+  mod2p <- sqrt(x2p*x2p + y2p*y2p)
+  cos.alpha <- dot.1p.2p / (mod1p * mod2p)
+  alpha <- acos(cos.alpha)
 
-  cosa <- x13*x23 + y13*y23
-  cosb <- x2p*x1p + y2p*y1p
 
-  if(cosa >= 0 && cosb>=0){
-    return(FALSE)
-  }
-
-  if(cosa<0 && cosb<0){
-    return(TRUE)
-  }
-
-  sina <- x13*y23 - x23*y13
-  sinb <- x2p*y1p - x1p*y2p
-  sinab <- sina*cosb + sinb*cosa
-
-  if(sinab < 0){
-    return(TRUE)
-  }
-
-  return(FALSE)
+  #angle between vector 3->1 and 3->2
+  x13 <- x1 - x3
+  y13 <- y1 - y3
+  x23 <- x2 - x3
+  y23 <- y2 - y3
+  dot.13.23 <- x13*x23 + y13*y23
+  mod13 <- sqrt(x13*x13 + y13*y13)
+  mod23 <- sqrt(x23*x23 + y23*y23)
+  cos.gamma <- dot.13.23/(mod13*mod23)
+  gamma <- acos(cos.gamma)
+  return((alpha+gamma) > pi)
 }
 
 #'@title Implementation of the EDG subroutine
@@ -398,7 +344,7 @@ swap <- function(x,y,P,V1,V2,V3){
 #'@param e List of adjacent triangles
 #'@param I index of triangle I
 #'@param J index of triangle J
-edg <- function(e,I,J){
+edg <- function(I,J,e){
   for(i in 1:3){
     if(e[i,I] == J){
       return(i)

@@ -4,20 +4,24 @@
 \alias{swap}
 \title{Implementation of the SWAP subroutine}
 \usage{
-swap(x, y, P, V1, V2, V3)
+swap(x1, y1, x2, y2, x3, y3, xp, yp)
 }
 \arguments{
-\item{x}{X coordinates of points}
+\item{x1}{X coordinate of V1}
 
-\item{y}{Y coordinates of points}
+\item{y1}{Y coordinate of V1}
 
-\item{P}{Index number of point P}
+\item{x2}{X coordinate of V2}
 
-\item{V1}{Index number of point V1}
+\item{y2}{Y coordinate of V2}
 
-\item{V2}{Index number of point V2}
+\item{x3}{X coordinate of V3}
 
-\item{V3}{Index number of point V3}
+\item{y3}{Y coordinate of V3}
+
+\item{xp}{X coordinate of P}
+
+\item{yp}{Y coordinate of P}
 }
 \description{
 Checks to see if triangle P-V2-V1 and V3-V1-V2 need to swap common edge

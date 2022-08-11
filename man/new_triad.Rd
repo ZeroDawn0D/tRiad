@@ -4,7 +4,7 @@
 \alias{new_triad}
 \title{Constructor for the triad class}
 \usage{
-new_triad(x, y, v, e)
+new_triad(x, y, v)
 }
 \arguments{
 \item{x}{X coordinates of points}
@@ -12,8 +12,6 @@ new_triad(x, y, v, e)
 \item{y}{y coordinates of points}
 
 \item{v}{A 2D matrix storing information of vertices that make up a triangle}
-
-\item{e}{A 2D matrix storing information of the triangles adjacent to each other}
 }
 \description{
 An object which stores the information of all vertices and triangles for the Delaunay Triangulation

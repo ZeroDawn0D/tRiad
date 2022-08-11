@@ -4,10 +4,12 @@
 \alias{plot.triad}
 \title{plot function for objects of triad class}
 \usage{
-\method{plot}{triad}(x, ...)
+\method{plot}{triad}(x, numtext = FALSE, ...)
 }
 \arguments{
 \item{x}{An object of triad class}
+
+\item{numtext}{Whether points are numbered in the plot}
 
 \item{...}{Additional arguments to pass to plot()}
 }

@@ -15,16 +15,18 @@
 #'@title plot function for objects of triad class
 #'@description Plots the Delaunay triangulation on passing a triad object
 #'@param x An object of triad class
+#'@param numtext Whether points are numbered in the plot
 #'@param ... Additional arguments to pass to plot()
 #'@export
-plot.triad <- function(x, ...){
+plot.triad <- function(x,numtext=FALSE, ...){
   y <- x$y
   v <- x$v
   x <- x$x
   plot(x, y, ...)
   n<-length(y)
-  text(x,y,1:n, pos = 3)
-
+  if(numtext){
+    graphics::text(x,y,1:n, pos = 3)
+  }
   ntri <- length(v)/3
   for(i in 1:ntri){
     xplot <- c(

@@ -4,14 +4,14 @@
 \alias{edg}
 \title{Implementation of the EDG subroutine}
 \usage{
-edg(e, I, J)
+edg(I, J, e)
 }
 \arguments{
-\item{e}{List of adjacent triangles}
-
 \item{I}{index of triangle I}
 
 \item{J}{index of triangle J}
+
+\item{e}{List of adjacent triangles}
 }
 \description{
 returns which edge of I is adjacent to J

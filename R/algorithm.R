@@ -18,7 +18,6 @@ y <- c(10,-20,-20,20,0,0)
 #'@param x X coordinates of points
 #'@param y y coordinates of points
 #'@param v A 2D matrix storing information of vertices that make up a triangle
-#'@param e A 2D matrix storing information of the triangles adjacent to each other
 #'
 #'@export
 new_triad <- function(x,y,v){
@@ -304,12 +303,14 @@ triloc <- function(i,x,y,v,e){
 #'@title Implementation of the SWAP subroutine
 #'@description Checks to see if triangle P-V2-V1 and V3-V1-V2 need to swap common edge
 #'
-#'@param x X coordinates of points
-#'@param y Y coordinates of points
-#'@param P Index number of point P
-#'@param V1 Index number of point V1
-#'@param V2 Index number of point V2
-#'@param V3 Index number of point V3
+#'@param x1 X coordinate of V1
+#'@param y1 Y coordinate of V1
+#'@param x2 X coordinate of V2
+#'@param y2 Y coordinate of V2
+#'@param x3 X coordinate of V3
+#'@param y3 Y coordinate of V3
+#'@param xp X coordinate of P
+#'@param yp Y coordinate of P
 #'
 swap <- function(x1, y1, x2, y2, x3, y3, xp, yp){
 

@@ -18,14 +18,29 @@ knitr::opts_chunk$set(
 
 <!-- badges: end -->
 
-## overview 
+## overview
+
 tRiad is a package to perform Constrained Delaunay Triangulations ([Cline and Renka(1990)](https://epubs.siam.org/doi/abs/10.1137/0727074)) on a set of 2D points
 
 ## installation
 
-``` r
+```{r}
 #Development version
 #install.packages("devtools")
 devtools::install_github("ZeroDawn0D/tRiad")
+```
+
+## Running
+
+```{r}
+x <- c(0,10,-20,30,10,-10)
+y <- c(10,-20,-20,20,0,0)
+plot(x,y)
+```
+
+```{r}
+library(triad)
+triad.obj <- del_tri(x,y)
+plot(triad.obj)
 ```
 

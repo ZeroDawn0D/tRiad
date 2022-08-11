@@ -44,3 +44,24 @@ triad.obj <- del_tri(x,y)
 plot(triad.obj)
 ```
 
+```{r}
+data("datasaurus_dozen")
+dino <- datasaurus_dozen %>%
+  filter(dataset == "dino") 
+dino.obj <- del_tri(dino)
+plot(dino.obj)
+
+x_shape <- datasaurus_dozen %>%
+  filter(dataset == "x_shape") 
+x_shape.obj <- del_tri(x_shape)
+plot(x_shape.obj)
+
+```
+
+```{r}
+n <- 1000
+x <- runif(n)
+y <- runif(n)
+speed.obj <- del_tri(x, y)
+plot(speed.obj)
+```

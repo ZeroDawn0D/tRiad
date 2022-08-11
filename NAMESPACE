@@ -2,6 +2,9 @@
 
 S3method(plot,triad)
 export(del_tri)
+export(delaun)
+export(edg)
 export(left.right)
 export(new_triad)
+export(swap)
 export(triloc)

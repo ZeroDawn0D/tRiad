@@ -28,3 +28,4 @@ tRiad is a package to perform Constrained Delaunay Triangulations ([Cline and Re
 #install.packages("devtools")
 devtools::install_github("ZeroDawn0D/tRiad")
 ```
+

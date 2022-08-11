@@ -76,6 +76,7 @@ del_tri <- function(x,y=NULL, maxrange=TRUE){
 #'@param norm_x Normalised X coordinates of points
 #'@param norm_y NormalisedY coordinates of points
 #'
+#'@export
 delaun <- function(norm_x, norm_y){
   x <- norm_x
   y <- norm_y
@@ -311,7 +312,7 @@ triloc <- function(i,x,y,v,e){
 #'@param y3 Y coordinate of V3
 #'@param xp X coordinate of P
 #'@param yp Y coordinate of P
-#'
+#'@export
 swap <- function(x1, y1, x2, y2, x3, y3, xp, yp){
 
   #angle between vector p->1 and p->2
@@ -345,6 +346,7 @@ swap <- function(x1, y1, x2, y2, x3, y3, xp, yp){
 #'@param e List of adjacent triangles
 #'@param I index of triangle I
 #'@param J index of triangle J
+#'@export
 edg <- function(I,J,e){
   for(i in 1:3){
     if(e[i,I] == J){

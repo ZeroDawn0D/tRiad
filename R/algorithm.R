@@ -34,7 +34,7 @@ new_triad <- function(x,y,v){
 #'@description Calculates the Delaunay Triangulation of the given set of points.
 #'@param x stores the x coordinates of the points. If y is NULL, it is treated as a data.frame
 #'@param y stores the Y coordinates of the points
-#'@param maxrange if TRUE, normalisation is done with max(x range, y range) for both x and y values
+#'@param maxrange if TRUE, normalisation is done with max(x range, y range) for both x and y values, otherwise uses x/y range for x/y normalisation
 #'
 #'@export
 del_tri <- function(x,y=NULL, maxrange=TRUE){
@@ -324,6 +324,12 @@ swap <- function(x1, y1, x2, y2, x3, y3, xp, yp){
   mod1p <- sqrt(x1p*x1p + y1p*y1p)
   mod2p <- sqrt(x2p*x2p + y2p*y2p)
   cos.alpha <- dot.1p.2p / (mod1p * mod2p)
+  if(cos.alpha > 1){
+    cos.alpha <- 1
+  }
+  if(cos.alpha < -1){
+    cos.alpha <- -1
+  }
   alpha <- acos(cos.alpha)
 
 
@@ -336,6 +342,12 @@ swap <- function(x1, y1, x2, y2, x3, y3, xp, yp){
   mod13 <- sqrt(x13*x13 + y13*y13)
   mod23 <- sqrt(x23*x23 + y23*y23)
   cos.gamma <- dot.13.23/(mod13*mod23)
+  if(cos.gamma > 1){
+    cos.gamma <- 1
+  }
+  if(cos.gamma < -1){
+    cos.gamma <- -1
+  }
   gamma <- acos(cos.gamma)
   return((alpha+gamma) > pi)
 }

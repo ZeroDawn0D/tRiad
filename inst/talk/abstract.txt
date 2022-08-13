@@ -1,6 +1,12 @@
 # Abstract for NUMBAT presentation
 
-This talk will present the R package called triad. It is being developed as a Google Summer of Code 2022 project. The package computes a standard Delaunay triangulation of a set of 2D points. The motivation is that an original implementation in the package tripack, used FORTRAN with a ACM license which is now conflicting with CRAN policy of only open source licenses. Delaunay triangulation forms the basis of many scagnostic calculations, as available in the R package cassowaryr. I will discuss my choice of a particular algorithm, the challenges of coding the algorithm, some of the difficult steps and how I overcame them.
+tRiad: Delaunay Triangulations in R
+
+My name is Umang Majumder. I am a high school graduate from Kolkata, India about to begin college in a few months.
+
+This talk will present the R package called triad. It is being developed as a Google Summer of Code 2022 project. The package computes a standard Delaunay triangulation of a set of 2D points. The motivation is that an original implementation in the package tripack, used FORTRAN with a ACM license which is now conflicting with CRAN policy of only open source licenses. An implementation of Delaunay Triangulations also exists in the R package interp. However, both tripack(FORTRAN) and interp(C++) rely on non-R code. The reliance of tRiad on R code specifically makes it shorter, simpler and easier to debug. Delaunay triangulation forms the basis of many scagnostic calculations, as available in the R package cassowaryr.
+
+I will discuss my choice of a particular algorithm, the challenges of coding the algorithm, some of the difficult steps and how I overcame them.
 
 This work is being conducted jointly with Di Cook and Harriet Mason.
 

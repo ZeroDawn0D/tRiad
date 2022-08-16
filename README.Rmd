@@ -24,7 +24,7 @@ tRiad is a package to perform Constrained Delaunay Triangulations ([Cline and Re
 
 ## installation
 
-```{r}
+```{r, message=FALSE}
 #Development version
 #install.packages("devtools")
 devtools::install_github("ZeroDawn0D/tRiad")
@@ -42,4 +42,18 @@ plot(x,y)
 library(triad)
 triad.obj <- del_tri(x,y)
 plot(triad.obj)
+```
+
+## Using Data Frames
+
+```{r}
+data("datasaurus_dozen")
+dino <- datasaurus_dozen[datasaurus_dozen$dataset=="dino",]
+dino <- data.frame(x=dino$x, y=dino$y)
+plot(dino)
+```
+
+```{r}
+triad.dino <- del_tri(dino)
+plot(triad.dino)
 ```

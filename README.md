@@ -7,13 +7,13 @@
 
 <!-- badges: end -->
 
-## overview
+## Overview
 
 tRiad is a package to perform Delaunay Triangulations
 ([Sloan(1987)](https://www.newcastle.edu.au/__data/assets/pdf_file/0017/22508/13_A-fast-algorithm-for-constructing-Delaunay-triangulations-in-the-plane.pdf))
 on a set of 2D points
 
-## installation
+## Installation
 
 ``` r
 #Development version

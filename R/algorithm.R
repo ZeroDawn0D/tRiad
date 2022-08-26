@@ -1,18 +1,3 @@
-#retriangulate <- function(nodeset,a,b,triangle_set,reqd_edges){
-  #(1) Define X as the set of elements of nodeset strictly left of a->b and unseparated from the midpoint of a and b by any element of R.
-  #If X is not empty:
-    #(2) Determine x E X that maximizes angle axb.
-    #(3) Add triangle abx to triangle_set
-    #(4) Delete x from nodeset.
-    #(5) If [a, x] not in R, retriangulate (nodeset, a, x, triangle_set, reqd_edges).
-    #(6) If [x, b] not in R, retriangulate (nodeset, x, b, triangle_set, reqd_edges).
-#}
-
-
-
-x <- c(0,10,-20,30,10,-10)
-y <- c(10,-20,-20,20,0,0)
-
 #'@title Constructor for the triad class
 #'@description An object which stores the information of all vertices and triangles for the Delaunay Triangulation
 #'@param x X coordinates of points

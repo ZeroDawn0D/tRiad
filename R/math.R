@@ -8,8 +8,6 @@
 #'@param Ay Y component of point A
 #'@param Bx X component of point B
 #'@param By Y component of point B
-#'
-#'@export
 left.right <- function(Px,Py,Ax,Ay,Bx,By){
   ABx <- Bx-Ax
   ABy <- By-Ay

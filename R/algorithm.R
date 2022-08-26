@@ -18,8 +18,6 @@ y <- c(10,-20,-20,20,0,0)
 #'@param x X coordinates of points
 #'@param y y coordinates of points
 #'@param v A 2D matrix storing information of vertices that make up a triangle
-#'
-#'@export
 new_triad <- function(x,y,v){
   triad.obj <- list(
     x=x,
@@ -75,8 +73,6 @@ del_tri <- function(x,y=NULL, maxrange=TRUE){
 #'@description Returns a Delaunay Triangulation but with normalised points
 #'@param norm_x Normalised X coordinates of points
 #'@param norm_y NormalisedY coordinates of points
-#'
-#'@export
 delaun <- function(norm_x, norm_y){
   x <- norm_x
   y <- norm_y
@@ -252,9 +248,6 @@ delaun <- function(norm_x, norm_y){
 #'@param y Y coordinates of points
 #'@param v vertices of triangles, columns are triangle number and rows are vertices 1, 2, and 3
 #'@param e adjacency of triangles, columns are triangle number and rows are ids of adjacent triangles
-#'
-#' @export
-
 triloc <- function(i,x,y,v,e){
 
   cur.tri = 1
@@ -312,7 +305,6 @@ triloc <- function(i,x,y,v,e){
 #'@param y3 Y coordinate of V3
 #'@param xp X coordinate of P
 #'@param yp Y coordinate of P
-#'@export
 swap <- function(x1, y1, x2, y2, x3, y3, xp, yp){
 
   #angle between vector p->1 and p->2
@@ -358,7 +350,6 @@ swap <- function(x1, y1, x2, y2, x3, y3, xp, yp){
 #'@param e List of adjacent triangles
 #'@param I index of triangle I
 #'@param J index of triangle J
-#'@export
 edg <- function(I,J,e){
   for(i in 1:3){
     if(e[i,I] == J){

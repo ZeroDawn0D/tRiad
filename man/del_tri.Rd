@@ -11,7 +11,7 @@ del_tri(x, y = NULL, maxrange = TRUE)
 
 \item{y}{stores the Y coordinates of the points}
 
-\item{maxrange}{if TRUE, normalisation is done with max(x range, y range) for both x and y values}
+\item{maxrange}{if TRUE, normalisation is done with max(x range, y range) for both x and y values, otherwise uses x/y range for x/y normalisation}
 }
 \description{
 Calculates the Delaunay Triangulation of the given set of points.

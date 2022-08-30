@@ -54,6 +54,41 @@ del_tri <- function(x,y=NULL, maxrange=TRUE){
   return(triad.obj)
 }
 
+#'@export
+del_tri2 <- function(x,y=NULL, maxrange=TRUE){
+  if(is.null(y)){
+    x_p <- x$x
+    y_p <- x$y
+  }
+  else {
+    x_p <- x
+    y_p <- y
+  }
+  n <- length(x_p)
+  if(n != length(y_p)){
+    stop("unequal size of x and y")
+  }
+  x_min <- min(x_p)
+  x_max <- max(x_p)
+  y_min <- min(y_p)
+  y_max <- max(y_p)
+  x_range <- x_max-x_min
+  y_range <- y_max-y_min
+  d_max <- max(x_range, y_range)
+  if(maxrange){
+    x_div <- d_max
+    y_div <- d_max
+  }else{
+    x_div <- x_range
+    y_div <- y_range
+  }
+  norm_x <- (x_p - x_min)/x_div
+  norm_y <- (y_p - y_min)/y_div
+  v <- Delaun(norm_x, norm_y)
+  triad.obj <- new_triad(x_p, y_p, v)
+  return(triad.obj)
+}
+
 #'@title Implementation of the DELAUN subroutine
 #'@description Returns a Delaunay Triangulation but with normalised points
 #'@param norm_x Normalised X coordinates of points

@@ -233,6 +233,9 @@ delaun <- function(norm_x, norm_y){
         }
       }
     }
+    print("New Matrix\n");
+    print(v);
+    print(ncol(v));
   }
 
   #check consistency of triangulation

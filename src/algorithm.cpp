@@ -4,6 +4,22 @@
 # define PI 3.14159265358979323846
 using namespace Rcpp;
 
+//[[Rcpp::export]]
+NumericMatrix GetMatrix(std::vector<std::vector<int>> m){
+  int numtri = m[1].size()-1;
+  NumericMatrix m_new(3,numtri);
+  for(int i = 1; i<=3; i++){
+    for(int j = 1; j<=numtri;j++){
+      m_new(i-1,j-1) = m[i][j];
+    }
+  }
+  return m_new;
+}
+
+
+
+
+
 //' @title Implementation of the EDG subroutine
 //' @description Returns which edge of I is adjacent to J
 //' @param I index of triangles I
@@ -335,9 +351,17 @@ NumericMatrix Delaun(NumericVector norm_x,
         }
       }
     }
+    
+    Rcout<<"New Matrix\n";
+    Rcout<<GetMatrix(v);
+    Rcout<<GetMatrix(v).ncol();
   }
+  
+  
+  
   //check consistency of triangulation
   int t = 1;
+  
   while(t <= numtri){
     if(v[1][t] > numpts || v[2][t] > numpts || v[3][t] > numpts){
       v[1].erase(v[1].begin() + t);
@@ -348,12 +372,9 @@ NumericMatrix Delaun(NumericVector norm_x,
       t++;
     }
   }
-  numtri = v[1].size();
-  NumericMatrix v_new(3,numtri);
-  for(int i = 1; i<=3; i++){
-    for(int j = 1; j<=numtri;j++){
-      v_new(i-1,j-1) = v[i][j];
-    }
-  }
-  return v_new;
+  NumericMatrix m = GetMatrix(v);
+  return m;
 }
+
+
+

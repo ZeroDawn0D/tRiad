@@ -10,6 +10,17 @@ Rcpp::Rostream<true>&  Rcpp::Rcout = Rcpp::Rcpp_cout_get();
 Rcpp::Rostream<false>& Rcpp::Rcerr = Rcpp::Rcpp_cerr_get();
 #endif
 
+// GetMatrix
+NumericMatrix GetMatrix(std::vector<std::vector<int>> m);
+RcppExport SEXP _triad_GetMatrix(SEXP mSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< std::vector<std::vector<int>> >::type m(mSEXP);
+    rcpp_result_gen = Rcpp::wrap(GetMatrix(m));
+    return rcpp_result_gen;
+END_RCPP
+}
 // Edge
 int Edge(int I, int J, std::vector<std::vector<int>> e);
 RcppExport SEXP _triad_Edge(SEXP ISEXP, SEXP JSEXP, SEXP eSEXP) {
@@ -112,6 +123,7 @@ END_RCPP
 }
 
 static const R_CallMethodDef CallEntries[] = {
+    {"_triad_GetMatrix", (DL_FUNC) &_triad_GetMatrix, 1},
     {"_triad_Edge", (DL_FUNC) &_triad_Edge, 3},
     {"_triad_LeftRight", (DL_FUNC) &_triad_LeftRight, 6},
     {"_triad_Swap", (DL_FUNC) &_triad_Swap, 8},

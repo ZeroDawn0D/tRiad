@@ -1,0 +1,91 @@
+---
+title: "GSoC"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{GSoC}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+```{r setup}
+#devtools::install_github("ZeroDawn0D/tRiad")
+library(triad)
+```
+
+# Introduction
+
+This package has been developed as part of Google Summer of Code 2022, with the help of my mentors Di Cook and Harriet Mason. It calculates the Standard Delaunay Triangulations of a set of 2D points using the Sloan(1987) algorithm.
+
+There are two ways to use triad
+
+### C++ functions (faster but harder to read and modify)
+
+The `DelTri()` function creates an object of class `triad`. This object can be plotted.
+
+```{r}
+    x <- runif(100)
+    y <- runif(100)
+    o1 <- triad::DelTri(x,y)
+    plot(o1, type = 'n')
+```
+
+### R functions (slower but easier to read and modify)
+
+The `del.tri()` function does what `DelTri()` does. The object can be plotted in a similar way.
+
+```{r}
+x <- runif(10)
+y <- runif(10)
+o2 <- triad::del.tri(x,y)
+plot(o2)
+
+```
+
+### Time comparisons
+
+We also compare with `interp::tri.mesh()`
+
+```{r}
+#install.packages("interp")
+library(interp)
+x <- runif(500)
+y <- runif(500)
+```
+
+```{r}
+system.time(triad::del.tri(x,y))
+```
+
+```{r}
+system.time(triad::DelTri(x,y))
+```
+
+```{r}
+system.time(interp::tri.mesh(x,y))
+```
+
+For larger input:
+
+```{r}
+x <- runif(5000)
+y <- runif(5000)
+```
+
+```{r}
+system.time(triad::del.tri(x,y))
+```
+
+```{r}
+system.time(triad::DelTri(x,y))
+```
+
+```{r}
+system.time(interp::tri.mesh(x,y))
+```

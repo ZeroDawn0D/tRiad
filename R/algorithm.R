@@ -20,7 +20,7 @@ new_triad <- function(x,y,v){
 #'@param maxrange if TRUE, normalisation is done with max(x range, y range) for both x and y values, otherwise uses x/y range for x/y normalisation
 #'
 #'@export
-del_tri <- function(x,y=NULL, maxrange=TRUE){
+del.tri <- function(x,y=NULL, maxrange=TRUE){
   if(is.null(y)){
     x_p <- x$x
     y_p <- x$y

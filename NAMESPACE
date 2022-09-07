@@ -2,7 +2,7 @@
 
 S3method(plot,triad)
 export(DelTri)
-export(del_tri)
+export(del.tri)
 exportPattern("^[[:alpha:]]+")
 importFrom(Rcpp,evalCpp)
 useDynLib(triad, .registration=TRUE)

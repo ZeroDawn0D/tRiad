@@ -1,4 +1,3 @@
-
 # tRiad
 
 <!-- badges: start -->
@@ -9,9 +8,7 @@
 
 ## Overview
 
-tRiad is a package to perform Delaunay Triangulations
-([Sloan(1987)](https://www.newcastle.edu.au/__data/assets/pdf_file/0017/22508/13_A-fast-algorithm-for-constructing-Delaunay-triangulations-in-the-plane.pdf))
-on a set of 2D points
+tRiad is a package to perform Delaunay Triangulations ([Sloan(1987)](https://www.newcastle.edu.au/__data/assets/pdf_file/0017/22508/13_A-fast-algorithm-for-constructing-Delaunay-triangulations-in-the-plane.pdf)) on a set of 2D points. It was developed as part of GSoC 2022 for the R Project for Statistical Computing. It was developed with the help of my mentors Di Cook and Harriet Mason.
 
 ## Installation
 
@@ -33,7 +30,7 @@ plot(x,y)
 
 ``` r
 library(triad)
-triad.obj <- del_tri(x,y)
+triad.obj <- DelTri(x,y)
 plot(triad.obj)
 ```
 
@@ -51,7 +48,7 @@ plot(dino)
 ![](man/figures/README-unnamed-chunk-4-1.png)<!-- -->
 
 ``` r
-triad.dino <- del_tri(dino)
+triad.dino <- DelTri(dino)
 plot(triad.dino)
 ```
 

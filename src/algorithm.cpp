@@ -81,6 +81,7 @@ bool Swap(double x1,
           double xp,
           double yp){
   // angle between vector p->1 and p->2
+ // Rcout<<"SWAP: "<<x1<<" "<<y1<<" "<<x2<<" "<<y2<<" "<<x3<<" "<<y3<<" "<<xp<<" "<<yp<<"\n";
   double x1p = x1 - xp;
   double y1p = y1 - yp;
   double x2p = x2 - xp;
@@ -96,7 +97,7 @@ bool Swap(double x1,
     cosalpha = -1;
   }
   double alpha = std::acos(cosalpha);
-  
+
   //angle between vector 3->1 and 3->2
   double x13 = x1 - x3;
   double y13 = y1 - y3;
@@ -192,16 +193,16 @@ int test_TriLoc(int i,
     xv[i] = x[i-1];
     yv[i] = y[i-1];
   }
-  
+
   for(int i = 1; i<=3;i++){
     for(int j =1; j <= ncol; j++){
       vv[i][j] = v(i-1,j-1);
       ev[i][j] = e(i-1,j-1);
     }
   }
-  
+
   return TriLoc(i,xv,yv,vv,ev);
-  
+
 }
 
 //'@title Implementation of the DELAUN subroutine
@@ -210,7 +211,7 @@ int test_TriLoc(int i,
 //'@param norm_y Normalised Y coordinates of points
 //'@export
 //[[Rcpp::export]]
-NumericMatrix Delaun(NumericVector norm_x, 
+NumericMatrix Delaun(NumericVector norm_x,
                                      NumericVector norm_y){
   int numpts = norm_x.size();
   std::vector<double> x(numpts+3+1,0); // +3 for supertriangle, +1 to use 1-indexing in c++
@@ -219,7 +220,7 @@ NumericMatrix Delaun(NumericVector norm_x,
     x[i+1] = norm_x[i];
     y[i+1] = norm_y[i];
   }
-  
+
   //define vertex and adjacency list
   std::vector<int> aux_vector{0,0};
   std::vector<std::vector<int>> v(3+1,aux_vector);
@@ -229,26 +230,32 @@ NumericMatrix Delaun(NumericVector norm_x,
   v[1][1] = v1;
   v[2][1] = v2;
   v[3][1] = v3;
-  
+
   std::vector<std::vector<int>> e(3+1,aux_vector);
-  
+
   //reserve memory for speed purposes
+  /*
   v[1].reserve(2*numpts+1+3);
   v[2].reserve(2*numpts+1+3);
   v[3].reserve(2*numpts+1+3);
   e[1].reserve(2*numpts+1+3);
   e[2].reserve(2*numpts+1+3);
   e[3].reserve(2*numpts+1+3);
-  
+  */
   //set coords of supertriangle
   x[v1] = -100;
   x[v2] = 100;
   x[v3] = 0;
-  
+
   y[v1] = -100;
   y[v2] = -100;
   y[v3] = 100;
-  
+  //NumericMatrix v_;
+  //NumericMatrix e_;
+  //v_ = GetMatrix(v);
+  //e_ = GetMatrix(e);
+  //print(v_);
+  //print(e_);
   //loop over each point
   int numtri = 1;
   std::stack<int> tstack;
@@ -257,22 +264,30 @@ NumericMatrix Delaun(NumericVector norm_x,
     double yp = y[i];
     //locate triangle in which point lies
     int t = TriLoc(i,x,y,v,e);
-    
+
+    //Rcout<<"Point: "<<i<<"\n";
+    //Rcout<<"in triangle: "<<t<<"\n";
+
     //create new vertex and adjacency list for triangle t
     int a = e[1][t];
     int b = e[2][t];
     int c = e[3][t];
-    
+
     v1 = v[1][t];
     v2 = v[2][t];
     v3 = v[3][t];
-    
+
     v[1][t] = i;
     v[2][t] = v1;
     v[3][t] = v2;
     e[1][t] = numtri+2;
     e[2][t] = a;
     e[3][t] = numtri+1;
+    //Rcout<<"Updated position: "<<t<<"\n";
+    //v_ = GetMatrix(v);
+    //e_ = GetMatrix(e);
+    //print(v_);
+    //print(e_);
     // create new triangles
     for(int j = 1; j <=3;j++){
       v[j].push_back(0);
@@ -287,7 +302,12 @@ NumericMatrix Delaun(NumericVector norm_x,
     e[1][numtri] = t;
     e[2][numtri] = b;
     e[3][numtri] = numtri+1;
-    
+    //Rcout<<"Updated position: "<<numtri<<"\n";
+    //v_ = GetMatrix(v);
+    //e_ = GetMatrix(e);
+    //print(v_);
+    //print(e_);
+
     numtri++;
     v[1][numtri] = i;
     v[2][numtri] = v3;
@@ -295,16 +315,25 @@ NumericMatrix Delaun(NumericVector norm_x,
     e[1][numtri] = numtri-1;
     e[2][numtri] = c;
     e[3][numtri] = t;
+    //Rcout<<"Updated position: "<<numtri<<"\n";
+    //v_ = GetMatrix(v);
+    //e_ = GetMatrix(e);
+    //print(v_);
+    //print(e_);
+
     // put each edge of triangle t on stack
     if(a != 0){
+      //Rcout<<"Added to stack: "<<t<<"\n";
       tstack.push(t);
     }
     if(b != 0){
       e[Edge(b,t,e)][b] = numtri-1;
+      //Rcout<<"Added to stack: "<<numtri-1<<"\n";
       tstack.push(numtri-1);
     }
     if(c!=0){
       e[Edge(c,t,e)][c] = numtri;
+      //Rcout<<"Added to stack: "<<numtri<<"\n";
       tstack.push(numtri);
     }
     // loop while stack is not empty
@@ -312,14 +341,17 @@ NumericMatrix Delaun(NumericVector norm_x,
       int l = tstack.top();
       tstack.pop();
       int r = e[2][l];
+      //Rcout<<"L R: "<<l<<" "<<r<<"\n";
       //check if new point is in circumcircle for triangle r
       int erl = Edge(r,l,e);
       int era = erl%3 + 1;
-      int erb = erl%3 + 1;
+      int erb = era%3 + 1;
       v1 = v[erl][r];
       v2 = v[era][r];
       v3 = v[erb][r];
+      //Rcout<<"ERL ERA ERB: "<<erl<<" "<<era<<" "<<erb<<"\n";
       bool swap_true = Swap(x[v1],y[v1],x[v2],y[v2],x[v3],y[v3],xp,yp);
+      //Rcout<<swap_true<<"\n";
       if(swap_true){
         // new  point is inside circumcircle for triangle r
         //swap diagonal for convex quad formed by P V2 V3 V1
@@ -335,33 +367,37 @@ NumericMatrix Delaun(NumericVector norm_x,
         v[2][r] = v3;
         v[3][r] = v1;
         e[1][r] = l;
-        e[1][r] = b;
-        e[1][r] = c;
+        e[2][r] = b;
+        e[3][r] = c;
+        //Rcout<<"Updated position: "<<r<<"\n";
+        //v_ = GetMatrix(v);
+        //e_ = GetMatrix(e);
+        //print(v_);
+        //print(e_);
         // put edges l-a and r-b on stack
         // update adjacency lists for triangles a and c
         if(a!=0){
           e[Edge(a,r,e)][a] = l;
+          //Rcout<<"Added to stack: "<<l<<"\n";
           tstack.push(l);
         }
         if(b!=0){
+          //Rcout<<"Added to stack: "<<r<<"\n";
           tstack.push(r);
         }
         if(c!=0){
           e[Edge(c,l,e)][c] = r;
         }
       }
+      //Rcout<<"tstack size: "<<tstack.size()<<"\n";
     }
-    
-    Rcout<<"New Matrix\n";
-    Rcout<<GetMatrix(v);
-    Rcout<<GetMatrix(v).ncol();
   }
-  
-  
-  
+
+
+
   //check consistency of triangulation
   int t = 1;
-  
+
   while(t <= numtri){
     if(v[1][t] > numpts || v[2][t] > numpts || v[3][t] > numpts){
       v[1].erase(v[1].begin() + t);
@@ -376,5 +412,77 @@ NumericMatrix Delaun(NumericVector norm_x,
   return m;
 }
 
+
+//[[Rcpp::export]]
+List NewTriad(NumericVector x,
+                 NumericVector y,
+                 NumericMatrix v){
+  List TriadObj = List::create(Named("x") = x,
+                               Named("y") = y,
+                               Named("v") = v);
+  TriadObj.attr("class") = "triad";
+  return TriadObj;
+}
+
+//[[Rcpp::export]]
+RObject cpp_deltri(RObject x_,
+                   RObject y_ = R_NilValue,
+                   RObject maxrange_ = R_NilValue){ //true
+  NumericVector x,y;
+  if(!y_.isNULL()){
+    if(is<NumericVector>(x_) ){
+      x = as<NumericVector>(x_);
+    }else{
+      Rcout<<"ERROR: X coordinates are not in a vector\n";
+      return R_NilValue;
+    }
+
+    if(is<NumericVector>(y_) ){
+      y = as<NumericVector>(y_);
+    }else{
+      Rcout<<"ERROR: Y coordinates are not in a vector\n";
+      return R_NilValue;
+    }
+
+  }else{
+    if(is<DataFrame>(x_)){
+      DataFrame df = as<DataFrame>(x_);
+      x = df["x"];
+      y = df["y"];
+    }else{
+      Rcout<<"ERROR: y_ is null but x_ is not a dataframe\n";
+      return R_NilValue;
+    }
+
+  }
+  int n = x.size();
+  if(y.size() != n){
+    Rcout<<"ERROR: Unequal size of x and y\n";
+    return R_NilValue;
+  }
+
+  double x_min,y_min,x_max,y_max;
+  x_min = x[0];
+  x_max = x[0];
+  y_min = y[0];
+  y_max = y[0];
+  for(int i = 0; i < n; i++){
+    x_min = std::min(x_min,x[i]);
+    x_max = std::max(x_max,x[i]);
+    y_min = std::min(y_min,y[i]);
+    y_max = std::max(y_max,y[i]);
+  }
+  double x_range = x_max - x_min;
+  double y_range = y_max - y_min;
+  double d_max = std::max(x_range, y_range);
+  NumericVector norm_x(n);
+  NumericVector norm_y(n);
+  for(int i = 0; i < n;i++){
+    norm_x[i] = (x[i] - x_min)/d_max;
+    norm_y[i] = (y[i] - y_min)/d_max;
+  }
+  NumericMatrix v = Delaun(norm_x, norm_y);
+  return NewTriad(x,y,v);
+}
 
 

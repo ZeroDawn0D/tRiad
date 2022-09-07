@@ -110,6 +110,32 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
+// NewTriad
+List NewTriad(NumericVector x, NumericVector y, NumericMatrix v);
+RcppExport SEXP _triad_NewTriad(SEXP xSEXP, SEXP ySEXP, SEXP vSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< NumericVector >::type x(xSEXP);
+    Rcpp::traits::input_parameter< NumericVector >::type y(ySEXP);
+    Rcpp::traits::input_parameter< NumericMatrix >::type v(vSEXP);
+    rcpp_result_gen = Rcpp::wrap(NewTriad(x, y, v));
+    return rcpp_result_gen;
+END_RCPP
+}
+// cpp_deltri
+RObject cpp_deltri(RObject x_, RObject y_, RObject maxrange_);
+RcppExport SEXP _triad_cpp_deltri(SEXP x_SEXP, SEXP y_SEXP, SEXP maxrange_SEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< RObject >::type x_(x_SEXP);
+    Rcpp::traits::input_parameter< RObject >::type y_(y_SEXP);
+    Rcpp::traits::input_parameter< RObject >::type maxrange_(maxrange_SEXP);
+    rcpp_result_gen = Rcpp::wrap(cpp_deltri(x_, y_, maxrange_));
+    return rcpp_result_gen;
+END_RCPP
+}
 // timesTwo
 NumericVector timesTwo(NumericVector x);
 RcppExport SEXP _triad_timesTwo(SEXP xSEXP) {
@@ -130,6 +156,8 @@ static const R_CallMethodDef CallEntries[] = {
     {"_triad_TriLoc", (DL_FUNC) &_triad_TriLoc, 5},
     {"_triad_test_TriLoc", (DL_FUNC) &_triad_test_TriLoc, 5},
     {"_triad_Delaun", (DL_FUNC) &_triad_Delaun, 2},
+    {"_triad_NewTriad", (DL_FUNC) &_triad_NewTriad, 3},
+    {"_triad_cpp_deltri", (DL_FUNC) &_triad_cpp_deltri, 3},
     {"_triad_timesTwo", (DL_FUNC) &_triad_timesTwo, 1},
     {NULL, NULL, 0}
 };

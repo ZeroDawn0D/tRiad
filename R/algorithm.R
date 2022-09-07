@@ -54,40 +54,7 @@ del_tri <- function(x,y=NULL, maxrange=TRUE){
   return(triad.obj)
 }
 
-#'@export
-del_tri2 <- function(x,y=NULL, maxrange=TRUE){
-  if(is.null(y)){
-    x_p <- x$x
-    y_p <- x$y
-  }
-  else {
-    x_p <- x
-    y_p <- y
-  }
-  n <- length(x_p)
-  if(n != length(y_p)){
-    stop("unequal size of x and y")
-  }
-  x_min <- min(x_p)
-  x_max <- max(x_p)
-  y_min <- min(y_p)
-  y_max <- max(y_p)
-  x_range <- x_max-x_min
-  y_range <- y_max-y_min
-  d_max <- max(x_range, y_range)
-  if(maxrange){
-    x_div <- d_max
-    y_div <- d_max
-  }else{
-    x_div <- x_range
-    y_div <- y_range
-  }
-  norm_x <- (x_p - x_min)/x_div
-  norm_y <- (y_p - y_min)/y_div
-  v <- Delaun(norm_x, norm_y)
-  triad.obj <- new_triad(x_p, y_p, v)
-  return(triad.obj)
-}
+
 
 #'@title Implementation of the DELAUN subroutine
 #'@description Returns a Delaunay Triangulation but with normalised points
@@ -126,11 +93,15 @@ delaun <- function(norm_x, norm_y){
   #loop over each point
   numtri <- 1
   tstack <- c()
+  #print(v)
   for(i in 1:numpts){
     xp <- x[i]
     yp <- y[i]
     #locate triangle in which point lies
     t <- triloc(i,x,y,v,e)
+
+    #cat("Point: ",i, "\n")
+    #cat("in triangle: ", t,"\n")
 
     #create new vertex and adjacency list for triangle t
     a <- e[1,t]
@@ -140,13 +111,16 @@ delaun <- function(norm_x, norm_y){
     v1 <- v[1,t]
     v2 <- v[2,t]
     v3 <- v[3,t]
+
     v[1,t] <- i
     v[2,t] <- v1
     v[3,t] <- v2
     e[1,t] <- numtri+2
     e[2,t] <- a
     e[3,t] <- numtri+1
-
+    #cat("updated position: ",t,"\n")
+    #print(v)
+    #print(e)
     #create new triangles
     newcol <- c(0,0,0)
     v <- cbind(v,newcol)
@@ -161,7 +135,9 @@ delaun <- function(norm_x, norm_y){
     e[1,numtri] <- t
     e[2,numtri] <- b
     e[3,numtri] <- numtri+1
-
+    #cat("updated position: ",numtri,"\n")
+    #print(v)
+    #print(e)
     numtri <- numtri+1
     v[1,numtri] <- i
     v[2,numtri] <- v3
@@ -169,20 +145,26 @@ delaun <- function(norm_x, norm_y){
     e[1,numtri] <- numtri-1
     e[2,numtri] <- c
     e[3,numtri] <- t
+    #cat("updated position: ",numtri,"\n")
+    #print(v)
+    #print(e)
     #put each edge of triangle t on stack
     #store triangles on left side of each edge
     #update adjacency lists for adjacent triangles
     #adjacency list for element a does not need to be updated
     if(a!=0){
+      #cat("Added to stack: ", t, "\n");
       tstack <- c(t, tstack)
     }
     if(b!=0){
       e[edg(b,t,e),b] <- numtri-1
+      #cat("Added to stack: ", numtri-1, "\n");
       tstack <- c(numtri-1,tstack)
 
     }
     if(c!=0){
       e[edg(c,t,e),c] <- numtri
+      #cat("Added to stack: ", numtri, "\n");
       tstack <- c(numtri,tstack)
     }
     #loop while stack is not empty
@@ -190,6 +172,7 @@ delaun <- function(norm_x, norm_y){
       l <- tstack[1]
       tstack <- tstack[-1]
       r <- e[2,l]
+      #cat("L R: ", l," ",r,"\n");
       #check if new point is in circumcircle for triangle r
       erl <- edg(r,l,e)
       era <- erl %% 3 + 1
@@ -197,10 +180,12 @@ delaun <- function(norm_x, norm_y){
       v1 <- v[erl,r]
       v2 <- v[era,r]
       v3 <- v[erb,r]
+      #cat("ERL ERA ERB: ",erl," ",era," ",erb,"\n");
       swap.true <- swap(x[v1],y[v1],
                         x[v2],y[v2],
                         x[v3],y[v3],
                         xp,yp)
+      #cat(swap.true,"\n")
       if(swap.true){
         #new point is inside circumcircle for triangle r
         #swap diagonal for convex quad formed by P-V2-V3-V1
@@ -218,24 +203,26 @@ delaun <- function(norm_x, norm_y){
         e[1,r] <- l
         e[2,r] <- b
         e[3,r] <- c
-
+        #cat("updated position: ",r,"\n")
+        #print(v)
+        #print(e)
         #put edges l-a and r-b on stack
         #update adjacency lists for triangles a and c
         if(a!=0){
           e[edg(a,r,e),a] <- l
+          #cat("Added to stack: ", l, "\n");
           tstack <- c(l,tstack)
         }
         if(b!=0){
+          #cat("Added to stack: ", r, "\n");
           tstack <- c(r,tstack)
         }
         if(c!=0){
           e[edg(c,l,e),c] <- r
         }
       }
+      #cat("tstack size: ",length(tstack),"\n")
     }
-    print("New Matrix\n");
-    print(v);
-    print(ncol(v));
   }
 
   #check consistency of triangulation
@@ -272,7 +259,6 @@ delaun <- function(norm_x, norm_y){
 #'@param v vertices of triangles, columns are triangle number and rows are vertices 1, 2, and 3
 #'@param e adjacency of triangles, columns are triangle number and rows are ids of adjacent triangles
 triloc <- function(i,x,y,v,e){
-
   cur.tri = 1
   # arc1 is opposite v1
   triangle.found = FALSE
@@ -285,7 +271,6 @@ triloc <- function(i,x,y,v,e){
     Bx <- x[v[2,cur.tri]]
     By <- y[v[2,cur.tri]]
     lr12 <- left.right(Px,Py,Ax,Ay,Bx,By)
-
     if(lr12<0){
       cur.tri <- e[1,cur.tri]
       next
@@ -329,7 +314,7 @@ triloc <- function(i,x,y,v,e){
 #'@param xp X coordinate of P
 #'@param yp Y coordinate of P
 swap <- function(x1, y1, x2, y2, x3, y3, xp, yp){
-
+  #cat("SWAP: ",x1," ",y1," ",x2," ",y2," ",x3," ",y3," ",xp," ",yp,"\n")
   #angle between vector p->1 and p->2
   x1p <- x1 - xp
   y1p <- y1 - yp

@@ -71,6 +71,14 @@ Delaun <- function(norm_x, norm_y) {
     .Call(`_triad_Delaun`, norm_x, norm_y)
 }
 
+NewTriad <- function(x, y, v) {
+    .Call(`_triad_NewTriad`, x, y, v)
+}
+
+cpp_deltri <- function(x_, y_ = NULL, maxrange_ = NULL) {
+    .Call(`_triad_cpp_deltri`, x_, y_, maxrange_)
+}
+
 timesTwo <- function(x) {
     .Call(`_triad_timesTwo`, x)
 }

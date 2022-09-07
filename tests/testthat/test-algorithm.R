@@ -10,11 +10,11 @@ e[2,] <- c(0,0,0,0)
 e[3,] <- c(2,3,4,1)
 
 test_that("triloc tests", {
-  expect_equal(triloc(6,x,y,v,e), 1)
-  expect_equal(triloc(7,x,y,v,e), 2)
-  expect_equal(triloc(8,x,y,v,e), 3)
-  expect_equal(triloc(9,x,y,v,e), 4)
-  expect_equal(triloc(10,x,y,v,e), 1)
+  expect_equal(trilocR(6,x,y,v,e), 1)
+  expect_equal(trilocR(7,x,y,v,e), 2)
+  expect_equal(trilocR(8,x,y,v,e), 3)
+  expect_equal(trilocR(9,x,y,v,e), 4)
+  expect_equal(trilocR(10,x,y,v,e), 1)
 })
 
 

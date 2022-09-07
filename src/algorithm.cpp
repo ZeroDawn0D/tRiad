@@ -4,6 +4,10 @@
 # define PI 3.14159265358979323846
 using namespace Rcpp;
 
+
+//' @title Function to convert C++ matrices to R matrices, written in R
+//' @description Converts a 2D vector int to a NumericMatrix
+//' @param m A 2D vector int object from C++ STL
 //[[Rcpp::export]]
 NumericMatrix GetMatrix(std::vector<std::vector<int>> m){
   int numtri = m[1].size()-1;
@@ -20,12 +24,12 @@ NumericMatrix GetMatrix(std::vector<std::vector<int>> m){
 
 
 
-//' @title Implementation of the EDG subroutine
+//' @title Implementation of the EDG subroutine, written in C++
 //' @description Returns which edge of I is adjacent to J
 //' @param I index of triangles I
 //' @param J index of triangle J
 //' @param e List of adjacent triangles
-// [[Rcpp::export]]
+//[[Rcpp::export]]
 int Edge(int I,
          int J,
          std::vector<std::vector<int>> e){
@@ -45,11 +49,7 @@ int Edge(int I,
 //' @param Ay Y component of point A
 //' @param Bx X component of point B
 //' @param By Y component of point B
-//' @importFrom Rcpp evalCpp
-//' @exportPattern ^[[:alpha:]]+
-//' @useDynLib triad, .registration=TRUE
-//' @export
-// [[Rcpp::export]]
+//[[Rcpp::export]]
 double LeftRight(double Px, double Py, double Ax, double Ay, double Bx, double By){
   double ABx = Bx-Ax;
   double ABy = By-Ay;
@@ -70,7 +70,6 @@ double LeftRight(double Px, double Py, double Ax, double Ay, double Bx, double B
 //'@param y3 Y coordinate of V3
 //'@param xp X coordinate of P
 //'@param yp Y coordinate of P
-//'@export
 //[[Rcpp::export]]
 bool Swap(double x1,
           double y1,
@@ -127,7 +126,6 @@ bool Swap(double x1,
 //'@param y Y coordinates of points
 //'@param v Vertices of triangles, columns are triangle number and rows are vertices 1,2,3
 //'@param e Adjacency of triangles, columns are triangle number and rows are ids of adjacent triangles
-//'@export
 //[[Rcpp::export]]
 int TriLoc(int i,
            std::vector<double> x,
@@ -175,41 +173,11 @@ int TriLoc(int i,
   return -1;
 }
 
-//'@export
-//[[Rcpp::export]]
-int test_TriLoc(int i,
-                NumericVector x,
-                NumericVector y,
-                NumericMatrix v,
-                NumericMatrix e){
-  int n = x.size();
-  std::vector<double> xv(n+1);
-  std::vector<double> yv(n+1);
-  int ncol = v.ncol();
-  std::vector<int> aux(ncol+1);
-  std::vector<std::vector<int>> vv(4,aux);
-  std::vector<std::vector<int>> ev(4,aux);
-  for(int i = 1;i<=n;i++){
-    xv[i] = x[i-1];
-    yv[i] = y[i-1];
-  }
-
-  for(int i = 1; i<=3;i++){
-    for(int j =1; j <= ncol; j++){
-      vv[i][j] = v(i-1,j-1);
-      ev[i][j] = e(i-1,j-1);
-    }
-  }
-
-  return TriLoc(i,xv,yv,vv,ev);
-
-}
 
 //'@title Implementation of the DELAUN subroutine
 //'@description Returns a Delaunay Triangulation but with normalised points
 //'@param norm_x Normalised X coordinates of points
 //'@param norm_y Normalised Y coordinates of points
-//'@export
 //[[Rcpp::export]]
 NumericMatrix Delaun(NumericVector norm_x,
                                      NumericVector norm_y){
@@ -413,6 +381,14 @@ NumericMatrix Delaun(NumericVector norm_x,
 }
 
 
+
+
+
+//'@title Constructor for the triad class, written in C++
+//'@description An object which stores the information of all vertices and triangles for the Delaunay Triangulation
+//'@param x Object of NumericVector class, X coordinates
+//'@param y Object of NumericVector class, y coordinates
+//'@param v Object of NumericMatrix class, List of triangles
 //[[Rcpp::export]]
 List NewTriad(NumericVector x,
                  NumericVector y,
@@ -424,10 +400,21 @@ List NewTriad(NumericVector x,
   return TriadObj;
 }
 
+
+
+
+
+//' @title Implementation of the DELTRI subroutine, written in C++
+//' @description returns an object of triad class, which can be plotted
+//' @param x_ vector of X coordinates, if y_ is NULL, x_ is a data frame
+//' @param y_ vector of Y coordinates
+//' @importFrom Rcpp evalCpp
+//' @exportPattern ^[[:alpha:]]+
+//' @useDynLib triad, .registration=TRUE
+//' @export
 //[[Rcpp::export]]
-RObject cpp_deltri(RObject x_,
-                   RObject y_ = R_NilValue,
-                   RObject maxrange_ = R_NilValue){ //true
+RObject DelTri(RObject x_,
+               RObject y_ = R_NilValue){
   NumericVector x,y;
   if(!y_.isNULL()){
     if(is<NumericVector>(x_) ){

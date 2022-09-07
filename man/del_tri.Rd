@@ -2,7 +2,7 @@
 % Please edit documentation in R/algorithm.R
 \name{del_tri}
 \alias{del_tri}
-\title{Implementation of the DELTRI subroutine}
+\title{Implementation of the DELTRI subroutine written in R}
 \usage{
 del_tri(x, y = NULL, maxrange = TRUE)
 }

@@ -2,7 +2,7 @@
 % Please edit documentation in R/algorithm.R
 \name{edg}
 \alias{edg}
-\title{Implementation of the EDG subroutine}
+\title{Implementation of the EDG subroutine written in R}
 \usage{
 edg(I, J, e)
 }

@@ -83,21 +83,6 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
-// test_TriLoc
-int test_TriLoc(int i, NumericVector x, NumericVector y, NumericMatrix v, NumericMatrix e);
-RcppExport SEXP _triad_test_TriLoc(SEXP iSEXP, SEXP xSEXP, SEXP ySEXP, SEXP vSEXP, SEXP eSEXP) {
-BEGIN_RCPP
-    Rcpp::RObject rcpp_result_gen;
-    Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< int >::type i(iSEXP);
-    Rcpp::traits::input_parameter< NumericVector >::type x(xSEXP);
-    Rcpp::traits::input_parameter< NumericVector >::type y(ySEXP);
-    Rcpp::traits::input_parameter< NumericMatrix >::type v(vSEXP);
-    Rcpp::traits::input_parameter< NumericMatrix >::type e(eSEXP);
-    rcpp_result_gen = Rcpp::wrap(test_TriLoc(i, x, y, v, e));
-    return rcpp_result_gen;
-END_RCPP
-}
 // Delaun
 NumericMatrix Delaun(NumericVector norm_x, NumericVector norm_y);
 RcppExport SEXP _triad_Delaun(SEXP norm_xSEXP, SEXP norm_ySEXP) {
@@ -123,27 +108,15 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
-// cpp_deltri
-RObject cpp_deltri(RObject x_, RObject y_, RObject maxrange_);
-RcppExport SEXP _triad_cpp_deltri(SEXP x_SEXP, SEXP y_SEXP, SEXP maxrange_SEXP) {
+// DelTri
+RObject DelTri(RObject x_, RObject y_);
+RcppExport SEXP _triad_DelTri(SEXP x_SEXP, SEXP y_SEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
     Rcpp::traits::input_parameter< RObject >::type x_(x_SEXP);
     Rcpp::traits::input_parameter< RObject >::type y_(y_SEXP);
-    Rcpp::traits::input_parameter< RObject >::type maxrange_(maxrange_SEXP);
-    rcpp_result_gen = Rcpp::wrap(cpp_deltri(x_, y_, maxrange_));
-    return rcpp_result_gen;
-END_RCPP
-}
-// timesTwo
-NumericVector timesTwo(NumericVector x);
-RcppExport SEXP _triad_timesTwo(SEXP xSEXP) {
-BEGIN_RCPP
-    Rcpp::RObject rcpp_result_gen;
-    Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< NumericVector >::type x(xSEXP);
-    rcpp_result_gen = Rcpp::wrap(timesTwo(x));
+    rcpp_result_gen = Rcpp::wrap(DelTri(x_, y_));
     return rcpp_result_gen;
 END_RCPP
 }
@@ -154,11 +127,9 @@ static const R_CallMethodDef CallEntries[] = {
     {"_triad_LeftRight", (DL_FUNC) &_triad_LeftRight, 6},
     {"_triad_Swap", (DL_FUNC) &_triad_Swap, 8},
     {"_triad_TriLoc", (DL_FUNC) &_triad_TriLoc, 5},
-    {"_triad_test_TriLoc", (DL_FUNC) &_triad_test_TriLoc, 5},
     {"_triad_Delaun", (DL_FUNC) &_triad_Delaun, 2},
     {"_triad_NewTriad", (DL_FUNC) &_triad_NewTriad, 3},
-    {"_triad_cpp_deltri", (DL_FUNC) &_triad_cpp_deltri, 3},
-    {"_triad_timesTwo", (DL_FUNC) &_triad_timesTwo, 1},
+    {"_triad_DelTri", (DL_FUNC) &_triad_DelTri, 2},
     {NULL, NULL, 0}
 };
 

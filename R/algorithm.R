@@ -1,4 +1,4 @@
-#'@title Constructor for the triad class
+#'@title Constructor for the triad class, written in R
 #'@description An object which stores the information of all vertices and triangles for the Delaunay Triangulation
 #'@param x X coordinates of points
 #'@param y y coordinates of points
@@ -13,7 +13,7 @@ new_triad <- function(x,y,v){
 }
 
 
-#'@title Implementation of the DELTRI subroutine
+#'@title Implementation of the DELTRI subroutine written in R
 #'@description Calculates the Delaunay Triangulation of the given set of points.
 #'@param x stores the x coordinates of the points. If y is NULL, it is treated as a data.frame
 #'@param y stores the Y coordinates of the points
@@ -49,18 +49,18 @@ del_tri <- function(x,y=NULL, maxrange=TRUE){
   }
   norm_x <- (x_p - x_min)/x_div
   norm_y <- (y_p - y_min)/y_div
-  v <- delaun(norm_x, norm_y)
+  v <- delaunR(norm_x, norm_y)
   triad.obj <- new_triad(x_p, y_p, v)
   return(triad.obj)
 }
 
 
 
-#'@title Implementation of the DELAUN subroutine
+#'@title Implementation of the DELAUN subroutine written in R
 #'@description Returns a Delaunay Triangulation but with normalised points
 #'@param norm_x Normalised X coordinates of points
 #'@param norm_y NormalisedY coordinates of points
-delaun <- function(norm_x, norm_y){
+delaunR <- function(norm_x, norm_y){
   x <- norm_x
   y <- norm_y
   numpts <- length(x)
@@ -98,7 +98,7 @@ delaun <- function(norm_x, norm_y){
     xp <- x[i]
     yp <- y[i]
     #locate triangle in which point lies
-    t <- triloc(i,x,y,v,e)
+    t <- trilocR(i,x,y,v,e)
 
     #cat("Point: ",i, "\n")
     #cat("in triangle: ", t,"\n")
@@ -181,7 +181,7 @@ delaun <- function(norm_x, norm_y){
       v2 <- v[era,r]
       v3 <- v[erb,r]
       #cat("ERL ERA ERB: ",erl," ",era," ",erb,"\n");
-      swap.true <- swap(x[v1],y[v1],
+      swap.true <- swapR(x[v1],y[v1],
                         x[v2],y[v2],
                         x[v3],y[v3],
                         xp,yp)
@@ -251,14 +251,14 @@ delaun <- function(norm_x, norm_y){
 
 
 
-#'@title Check which triangles a point lies within
+#'@title Check which triangles a point lies within, written in R
 #'@description Returns the index of the triangle which contains the given point
 #'@param i index of the point to be located
 #'@param x X coordinates of points
 #'@param y Y coordinates of points
 #'@param v vertices of triangles, columns are triangle number and rows are vertices 1, 2, and 3
 #'@param e adjacency of triangles, columns are triangle number and rows are ids of adjacent triangles
-triloc <- function(i,x,y,v,e){
+trilocR <- function(i,x,y,v,e){
   cur.tri = 1
   # arc1 is opposite v1
   triangle.found = FALSE
@@ -302,7 +302,7 @@ triloc <- function(i,x,y,v,e){
   return(-1)
 }
 
-#'@title Implementation of the SWAP subroutine
+#'@title Implementation of the SWAP subroutine written in R
 #'@description Checks to see if triangle P-V2-V1 and V3-V1-V2 need to swap common edge
 #'
 #'@param x1 X coordinate of V1
@@ -313,7 +313,7 @@ triloc <- function(i,x,y,v,e){
 #'@param y3 Y coordinate of V3
 #'@param xp X coordinate of P
 #'@param yp Y coordinate of P
-swap <- function(x1, y1, x2, y2, x3, y3, xp, yp){
+swapR <- function(x1, y1, x2, y2, x3, y3, xp, yp){
   #cat("SWAP: ",x1," ",y1," ",x2," ",y2," ",x3," ",y3," ",xp," ",yp,"\n")
   #angle between vector p->1 and p->2
   x1p <- x1 - xp
@@ -352,7 +352,7 @@ swap <- function(x1, y1, x2, y2, x3, y3, xp, yp){
   return((alpha+gamma) > pi)
 }
 
-#'@title Implementation of the EDG subroutine
+#'@title Implementation of the EDG subroutine written in R
 #'@description returns which edge of I is adjacent to J
 #'
 #'@param e List of adjacent triangles

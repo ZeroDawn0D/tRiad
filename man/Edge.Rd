@@ -2,7 +2,7 @@
 % Please edit documentation in R/RcppExports.R
 \name{Edge}
 \alias{Edge}
-\title{Implementation of the EDG subroutine}
+\title{Implementation of the EDG subroutine, written in C++}
 \usage{
 Edge(I, J, e)
 }

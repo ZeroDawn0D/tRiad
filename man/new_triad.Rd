@@ -2,7 +2,7 @@
 % Please edit documentation in R/algorithm.R
 \name{new_triad}
 \alias{new_triad}
-\title{Constructor for the triad class}
+\title{Constructor for the triad class, written in R}
 \usage{
 new_triad(x, y, v)
 }

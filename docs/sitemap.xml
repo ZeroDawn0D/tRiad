@@ -4,6 +4,12 @@
     <loc>/404.html</loc>
   </url>
   <url>
+    <loc>/articles/GSoC.html</loc>
+  </url>
+  <url>
+    <loc>/articles/index.html</loc>
+  </url>
+  <url>
     <loc>/authors.html</loc>
   </url>
   <url>
@@ -19,7 +25,16 @@
     <loc>/reference/datasaurus_dozen_wide.html</loc>
   </url>
   <url>
+    <loc>/reference/del.tri.html</loc>
+  </url>
+  <url>
     <loc>/reference/delaun.html</loc>
+  </url>
+  <url>
+    <loc>/reference/delaunR.html</loc>
+  </url>
+  <url>
+    <loc>/reference/DelTri.html</loc>
   </url>
   <url>
     <loc>/reference/del_tri.html</loc>
@@ -28,10 +43,22 @@
     <loc>/reference/edg.html</loc>
   </url>
   <url>
+    <loc>/reference/Edge.html</loc>
+  </url>
+  <url>
+    <loc>/reference/GetMatrix.html</loc>
+  </url>
+  <url>
     <loc>/reference/index.html</loc>
   </url>
   <url>
     <loc>/reference/left.right.html</loc>
+  </url>
+  <url>
+    <loc>/reference/LeftRight.html</loc>
+  </url>
+  <url>
+    <loc>/reference/NewTriad.html</loc>
   </url>
   <url>
     <loc>/reference/new_triad.html</loc>
@@ -43,6 +70,12 @@
     <loc>/reference/swap.html</loc>
   </url>
   <url>
+    <loc>/reference/swapR.html</loc>
+  </url>
+  <url>
     <loc>/reference/triloc.html</loc>
+  </url>
+  <url>
+    <loc>/reference/trilocR.html</loc>
   </url>
 </urlset>

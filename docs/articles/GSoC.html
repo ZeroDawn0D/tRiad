@@ -79,11 +79,13 @@
 <p>This package has been developed as part of Google Summer of Code
 2022, with the help of my mentors Di Cook and Harriet Mason. It
 calculates the Standard Delaunay Triangulations of a set of 2D points
-using the Sloan(1987) algorithm.</p>
-<p>There are two ways to use triad</p>
-<div class="section level4">
-<h4 id="c-functions-faster-but-harder-to-read-and-modify">C++ functions (faster but harder to read and modify)<a class="anchor" aria-label="anchor" href="#c-functions-faster-but-harder-to-read-and-modify"></a>
-</h4>
+using the <a href="https://www.newcastle.edu.au/__data/assets/pdf_file/0017/22508/13_A-fast-algorithm-for-constructing-Delaunay-triangulations-in-the-plane.pdf" class="external-link">Sloan(1987)</a>
+algorithm.</p>
+<p>Link to GitHub repository: <a href="https://github.com/ZeroDawn0D/tRiad" class="external-link">ZeroDawn0D/tRiad</a></p>
+<p>There are two ways to use triad:</p>
+<div class="section level3">
+<h3 id="c-functions-faster-but-harder-to-read-and-modify">C++ functions (faster but harder to read and modify)<a class="anchor" aria-label="anchor" href="#c-functions-faster-but-harder-to-read-and-modify"></a>
+</h3>
 <p>The <code><a href="../reference/DelTri.html">DelTri()</a></code> function creates an object of class
 <code>triad</code>. This object can be plotted.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
@@ -93,9 +95,9 @@ using the Sloan(1987) algorithm.</p>
 <span>    <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">o1</span>, type <span class="op">=</span> <span class="st">'n'</span><span class="op">)</span></span></code></pre></div>
 <p><img src="GSoC_files/figure-html/unnamed-chunk-2-1.png" width="700"></p>
 </div>
-<div class="section level4">
-<h4 id="r-functions-slower-but-easier-to-read-and-modify">R functions (slower but easier to read and modify)<a class="anchor" aria-label="anchor" href="#r-functions-slower-but-easier-to-read-and-modify"></a>
-</h4>
+<div class="section level3">
+<h3 id="r-functions-slower-but-easier-to-read-and-modify">R functions (slower but easier to read and modify)<a class="anchor" aria-label="anchor" href="#r-functions-slower-but-easier-to-read-and-modify"></a>
+</h3>
 <p>The <code><a href="../reference/del.tri.html">del.tri()</a></code> function does what <code><a href="../reference/DelTri.html">DelTri()</a></code>
 does. The object can be plotted in a similar way.</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
@@ -105,9 +107,9 @@ does. The object can be plotted in a similar way.</p>
 <span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">o2</span><span class="op">)</span></span></code></pre></div>
 <p><img src="GSoC_files/figure-html/unnamed-chunk-3-1.png" width="700"></p>
 </div>
-<div class="section level4">
-<h4 id="time-comparisons">Time comparisons<a class="anchor" aria-label="anchor" href="#time-comparisons"></a>
-</h4>
+<div class="section level3">
+<h3 id="time-comparisons">Time comparisons<a class="anchor" aria-label="anchor" href="#time-comparisons"></a>
+</h3>
 <p>We also compare with <code><a href="https://rdrr.io/pkg/interp/man/tri.mesh.html" class="external-link">interp::tri.mesh()</a></code></p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co">#install.packages("interp")</span></span>
@@ -122,7 +124,7 @@ does. The object can be plotted in a similar way.</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/system.time.html" class="external-link">system.time</a></span><span class="op">(</span><span class="fu">triad</span><span class="fu">::</span><span class="fu"><a href="../reference/DelTri.html">DelTri</a></span><span class="op">(</span><span class="va">x</span>,<span class="va">y</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="co">#&gt;    user  system elapsed </span></span>
-<span><span class="co">#&gt;    0.02    0.00    0.02</span></span></code></pre></div>
+<span><span class="co">#&gt;    0.01    0.00    0.02</span></span></code></pre></div>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/system.time.html" class="external-link">system.time</a></span><span class="op">(</span><span class="fu">interp</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/interp/man/tri.mesh.html" class="external-link">tri.mesh</a></span><span class="op">(</span><span class="va">x</span>,<span class="va">y</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="co">#&gt;    user  system elapsed </span></span>
@@ -134,19 +136,86 @@ does. The object can be plotted in a similar way.</p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/system.time.html" class="external-link">system.time</a></span><span class="op">(</span><span class="fu">triad</span><span class="fu">::</span><span class="fu"><a href="../reference/del.tri.html">del.tri</a></span><span class="op">(</span><span class="va">x</span>,<span class="va">y</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="co">#&gt;    user  system elapsed </span></span>
-<span><span class="co">#&gt;    4.95    0.69    5.64</span></span></code></pre></div>
+<span><span class="co">#&gt;    6.06    0.39    6.45</span></span></code></pre></div>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/system.time.html" class="external-link">system.time</a></span><span class="op">(</span><span class="fu">triad</span><span class="fu">::</span><span class="fu"><a href="../reference/DelTri.html">DelTri</a></span><span class="op">(</span><span class="va">x</span>,<span class="va">y</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="co">#&gt;    user  system elapsed </span></span>
-<span><span class="co">#&gt;    0.30    0.00    0.29</span></span></code></pre></div>
+<span><span class="co">#&gt;    0.35    0.00    0.35</span></span></code></pre></div>
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/system.time.html" class="external-link">system.time</a></span><span class="op">(</span><span class="fu">interp</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/interp/man/tri.mesh.html" class="external-link">tri.mesh</a></span><span class="op">(</span><span class="va">x</span>,<span class="va">y</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="co">#&gt;    user  system elapsed </span></span>
-<span><span class="co">#&gt;    0.14    0.00    0.14</span></span></code></pre></div>
+<span><span class="co">#&gt;    0.11    0.00    0.11</span></span></code></pre></div>
 </div>
-<div class="section level4">
-<h4 id="swap-subroutine">SWAP subroutine<a class="anchor" aria-label="anchor" href="#swap-subroutine"></a>
-</h4>
+<div class="section level3">
+<h3 id="swap-subroutine">SWAP subroutine<a class="anchor" aria-label="anchor" href="#swap-subroutine"></a>
+</h3>
+<p>The code makes certain changes to the SWAP subroutine. For some
+reason, the algorithm as described in the paper broke when dealing with
+concave quadrilaterals.</p>
+<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">swapR</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">x1</span>, <span class="va">y1</span>, <span class="va">x2</span>, <span class="va">y2</span>, <span class="va">x3</span>, <span class="va">y3</span>, <span class="va">xp</span>, <span class="va">yp</span><span class="op">)</span><span class="op">{</span></span>
+<span>  <span class="va">x1p</span> <span class="op">&lt;-</span> <span class="va">x1</span> <span class="op">-</span> <span class="va">xp</span></span>
+<span>  <span class="va">y1p</span> <span class="op">&lt;-</span> <span class="va">y1</span> <span class="op">-</span> <span class="va">yp</span></span>
+<span>  <span class="va">x2p</span> <span class="op">&lt;-</span> <span class="va">x2</span> <span class="op">-</span> <span class="va">xp</span></span>
+<span>  <span class="va">y2p</span> <span class="op">&lt;-</span> <span class="va">y2</span> <span class="op">-</span> <span class="va">yp</span></span>
+<span>  <span class="va">dot.1p.2p</span> <span class="op">&lt;-</span> <span class="va">x1p</span><span class="op">*</span><span class="va">x2p</span> <span class="op">+</span> <span class="va">y1p</span><span class="op">*</span><span class="va">y2p</span></span>
+<span>  <span class="va">mod1p</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/MathFun.html" class="external-link">sqrt</a></span><span class="op">(</span><span class="va">x1p</span><span class="op">*</span><span class="va">x1p</span> <span class="op">+</span> <span class="va">y1p</span><span class="op">*</span><span class="va">y1p</span><span class="op">)</span></span>
+<span>  <span class="va">mod2p</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/MathFun.html" class="external-link">sqrt</a></span><span class="op">(</span><span class="va">x2p</span><span class="op">*</span><span class="va">x2p</span> <span class="op">+</span> <span class="va">y2p</span><span class="op">*</span><span class="va">y2p</span><span class="op">)</span></span>
+<span>  <span class="va">cos.alpha</span> <span class="op">&lt;-</span> <span class="va">dot.1p.2p</span> <span class="op">/</span> <span class="op">(</span><span class="va">mod1p</span> <span class="op">*</span> <span class="va">mod2p</span><span class="op">)</span></span>
+<span>  <span class="kw">if</span><span class="op">(</span><span class="va">cos.alpha</span> <span class="op">&gt;</span> <span class="fl">1</span><span class="op">)</span><span class="op">{</span></span>
+<span>    <span class="va">cos.alpha</span> <span class="op">&lt;-</span> <span class="fl">1</span></span>
+<span>  <span class="op">}</span></span>
+<span>  <span class="kw">if</span><span class="op">(</span><span class="va">cos.alpha</span> <span class="op">&lt;</span> <span class="op">-</span><span class="fl">1</span><span class="op">)</span><span class="op">{</span></span>
+<span>    <span class="va">cos.alpha</span> <span class="op">&lt;-</span> <span class="op">-</span><span class="fl">1</span></span>
+<span>  <span class="op">}</span></span>
+<span>  <span class="va">alpha</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/Trig.html" class="external-link">acos</a></span><span class="op">(</span><span class="va">cos.alpha</span><span class="op">)</span></span>
+<span></span>
+<span></span>
+<span>  <span class="co">#angle between vector 3-&gt;1 and 3-&gt;2</span></span>
+<span>  <span class="va">x13</span> <span class="op">&lt;-</span> <span class="va">x1</span> <span class="op">-</span> <span class="va">x3</span></span>
+<span>  <span class="va">y13</span> <span class="op">&lt;-</span> <span class="va">y1</span> <span class="op">-</span> <span class="va">y3</span></span>
+<span>  <span class="va">x23</span> <span class="op">&lt;-</span> <span class="va">x2</span> <span class="op">-</span> <span class="va">x3</span></span>
+<span>  <span class="va">y23</span> <span class="op">&lt;-</span> <span class="va">y2</span> <span class="op">-</span> <span class="va">y3</span></span>
+<span>  <span class="va">dot.13.23</span> <span class="op">&lt;-</span> <span class="va">x13</span><span class="op">*</span><span class="va">x23</span> <span class="op">+</span> <span class="va">y13</span><span class="op">*</span><span class="va">y23</span></span>
+<span>  <span class="va">mod13</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/MathFun.html" class="external-link">sqrt</a></span><span class="op">(</span><span class="va">x13</span><span class="op">*</span><span class="va">x13</span> <span class="op">+</span> <span class="va">y13</span><span class="op">*</span><span class="va">y13</span><span class="op">)</span></span>
+<span>  <span class="va">mod23</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/MathFun.html" class="external-link">sqrt</a></span><span class="op">(</span><span class="va">x23</span><span class="op">*</span><span class="va">x23</span> <span class="op">+</span> <span class="va">y23</span><span class="op">*</span><span class="va">y23</span><span class="op">)</span></span>
+<span>  <span class="va">cos.gamma</span> <span class="op">&lt;-</span> <span class="va">dot.13.23</span><span class="op">/</span><span class="op">(</span><span class="va">mod13</span><span class="op">*</span><span class="va">mod23</span><span class="op">)</span></span>
+<span>  <span class="kw">if</span><span class="op">(</span><span class="va">cos.gamma</span> <span class="op">&gt;</span> <span class="fl">1</span><span class="op">)</span><span class="op">{</span></span>
+<span>    <span class="va">cos.gamma</span> <span class="op">&lt;-</span> <span class="fl">1</span></span>
+<span>  <span class="op">}</span></span>
+<span>  <span class="kw">if</span><span class="op">(</span><span class="va">cos.gamma</span> <span class="op">&lt;</span> <span class="op">-</span><span class="fl">1</span><span class="op">)</span><span class="op">{</span></span>
+<span>    <span class="va">cos.gamma</span> <span class="op">&lt;-</span> <span class="op">-</span><span class="fl">1</span></span>
+<span>  <span class="op">}</span></span>
+<span>  <span class="va">gamma</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/Trig.html" class="external-link">acos</a></span><span class="op">(</span><span class="va">cos.gamma</span><span class="op">)</span></span>
+<span>  <span class="kw"><a href="https://rdrr.io/r/base/function.html" class="external-link">return</a></span><span class="op">(</span><span class="op">(</span><span class="va">alpha</span><span class="op">+</span><span class="va">gamma</span><span class="op">)</span> <span class="op">&gt;</span> <span class="va">pi</span><span class="op">)</span></span>
+<span><span class="op">}</span></span></code></pre></div>
+</div>
+<div class="section level3">
+<h3 id="further-work">Further work<a class="anchor" aria-label="anchor" href="#further-work"></a>
+</h3>
+<ul>
+<li>Implementing a C++ version of the Constrained Delaunay
+Triangulations. <code>tripack</code> has a FORTRAN implementation which
+is not open source</li>
+<li>
+<code><a href="../reference/plot.triad.html">plot.triad()</a></code> is slower than <code>plot.triSh()</code>
+although both are written in R. Optimise it even further</li>
+<li>Optimise <code><a href="../reference/DelTri.html">DelTri()</a></code> to be as fast as
+<code><a href="https://rdrr.io/pkg/interp/man/tri.mesh.html" class="external-link">interp::tri.mesh()</a></code>, if not faster</li>
+</ul>
+</div>
+<div class="section level3">
+<h3 id="optimising-c-code-even-further">Optimising C++ code even further<a class="anchor" aria-label="anchor" href="#optimising-c-code-even-further"></a>
+</h3>
+<p>The code makes use of <code>&lt;vector.h&gt;</code> and
+<code>&lt;stack.h&gt;</code> from the C++ Standard Template Library.
+Currently, I use <code>vector&lt;vector&lt;double&gt;&gt;</code> to
+represent 2D matrices, and ample use of <code>push_back()</code>. This
+leads to a lot of resizing that could slow down the code. I tried to
+reserve memory beforehand using <code>reserve()</code> but it became
+even slower. I also tried pre-allocating the memory but it did not work.
+There could be some way to use <code>double**</code> to optimise it.
+This is currently a work in progress.</p>
 </div>
 </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>

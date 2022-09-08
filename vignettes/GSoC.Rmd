@@ -96,7 +96,7 @@ system.time(interp::tri.mesh(x,y))
 
 The code makes certain changes to the SWAP subroutine. For some reason, the algorithm as described in the paper broke when dealing with concave quadrilaterals.
 
-```{r echo=FALSE}
+```{r eval=FALSE}
 swapR <- function(x1, y1, x2, y2, x3, y3, xp, yp){
   x1p <- x1 - xp
   y1p <- y1 - yp

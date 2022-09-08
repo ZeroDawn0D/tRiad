@@ -21,9 +21,9 @@ library(triad)
 
 # Introduction
 
-This package has been developed as part of Google Summer of Code 2022, with the help of my mentors Di Cook and Harriet Mason. It calculates the Standard Delaunay Triangulations of a set of 2D points using the Sloan(1987) algorithm.
+This package has been developed as part of Google Summer of Code 2022, with the help of my mentors Di Cook and Harriet Mason. It calculates the Standard Delaunay Triangulations of a set of 2D points using the [Sloan(1987)](https://www.newcastle.edu.au/__data/assets/pdf_file/0017/22508/13_A-fast-algorithm-for-constructing-Delaunay-triangulations-in-the-plane.pdf) algorithm.
 
-Link to GitHub repository: ZeroDawn0D/tRiad
+Link to GitHub repository: [ZeroDawn0D/tRiad](https://github.com/ZeroDawn0D/tRiad)
 
 There are two ways to use triad:
 

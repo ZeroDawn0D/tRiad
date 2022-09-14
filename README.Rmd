@@ -24,7 +24,7 @@ tRiad is a package to perform Delaunay Triangulations ([Sloan(1987)](https://www
 
 ## Installation
 
-```{r, message=FALSE}
+```{r, eval=FALSE}
 #Development version
 #install.packages("devtools")
 devtools::install_github("ZeroDawn0D/tRiad")

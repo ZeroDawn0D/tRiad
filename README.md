@@ -16,6 +16,17 @@ tRiad is a package to perform Delaunay Triangulations ([Sloan(1987)](https://www
 #Development version
 #install.packages("devtools")
 devtools::install_github("ZeroDawn0D/tRiad")
+#> 
+#> * checking for file 'C:\Users\umang\AppData\Local\Temp\Rtmpys7ony\remotes6fc066d14581\ZeroDawn0D-tRiad-f606fbb/DESCRIPTION' ... OK
+#> * preparing 'triad':
+#> * checking DESCRIPTION meta-information ... OK
+#> * cleaning src
+#> * checking for LF line-endings in source and make files and shell scripts
+#> * checking for empty or unneeded directories
+#> * building 'triad_0.0.0.9000.tar.gz'
+#> 
+#> Warning in i.p(...): installation of package 'C:/Users/umang/AppData/Local/Temp/
+#> Rtmpys7ony/file6fc05ca84339/triad_0.0.0.9000.tar.gz' had non-zero exit status
 ```
 
 ## Running
@@ -39,17 +50,15 @@ plot(triad.obj)
 ## Using Data Frames
 
 ``` r
-data("datasaurus_dozen")
-dino <- datasaurus_dozen[datasaurus_dozen$dataset=="dino",]
-dino <- data.frame(x=dino$x, y=dino$y)
-plot(dino)
+data("hundred")
+plot(hundred)
 ```
 
 ![](man/figures/README-unnamed-chunk-4-1.png)<!-- -->
 
 ``` r
-triad.dino <- DelTri(dino)
-plot(triad.dino)
+triad.hundred <- DelTri(hundred)
+plot(triad.hundred, type = 'n')
 ```
 
 ![](man/figures/README-unnamed-chunk-5-1.png)<!-- -->

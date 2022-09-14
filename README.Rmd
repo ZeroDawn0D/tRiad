@@ -47,13 +47,11 @@ plot(triad.obj)
 ## Using Data Frames
 
 ```{r}
-data("datasaurus_dozen")
-dino <- datasaurus_dozen[datasaurus_dozen$dataset=="dino",]
-dino <- data.frame(x=dino$x, y=dino$y)
-plot(dino)
+data("hundred")
+plot(hundred)
 ```
 
 ```{r}
-triad.dino <- DelTri(dino)
-plot(triad.dino)
+triad.hundred <- DelTri(hundred)
+plot(triad.hundred, type = 'n')
 ```

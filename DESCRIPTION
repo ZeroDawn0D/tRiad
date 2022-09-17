@@ -1,10 +1,22 @@
 Package: triad
 Title: Constrained Delaunay Triangulations in R 
 Version: 1.0.0
-Authors@R: 
-    person(
-      "Umang", "Majumder", , "umang26112003@gmail.com", 
-      role = c("aut", "cre"))
+Authors@R:
+  c(
+    person(given = "Umang",
+           family = "Majumer",
+           email = "umang.zerodawn0d@gmail.com",
+           role = c("aut","cre")),
+    person(given = "Harriet",
+           family = "Mason",
+           email = "harriet.m.mason@gmail.com",
+           role = "aut"),
+    person(given = "Dianne",
+           family = "Cook",
+           email = "dicook@gmail.com",
+           role = "aut",
+           comment = c(ORCID = "0000-0002-3813-7155"))
+    )
 Description: An implementation of the Constrained Delaunay Triangulations as detailed in Cline and Renka(1990).
 License: GPL (>= 3)
 Encoding: UTF-8

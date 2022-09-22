@@ -120,15 +120,15 @@ does. The object can be plotted in a similar way.</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/system.time.html" class="external-link">system.time</a></span><span class="op">(</span><span class="fu">triad</span><span class="fu">::</span><span class="fu"><a href="../reference/del.tri.html">del.tri</a></span><span class="op">(</span><span class="va">x</span>,<span class="va">y</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="co">#&gt;    user  system elapsed </span></span>
-<span><span class="co">#&gt;    0.25    0.00    0.26</span></span></code></pre></div>
+<span><span class="co">#&gt;    0.25    0.00    0.25</span></span></code></pre></div>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/system.time.html" class="external-link">system.time</a></span><span class="op">(</span><span class="fu">triad</span><span class="fu">::</span><span class="fu"><a href="../reference/DelTri.html">DelTri</a></span><span class="op">(</span><span class="va">x</span>,<span class="va">y</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="co">#&gt;    user  system elapsed </span></span>
-<span><span class="co">#&gt;    0.01    0.00    0.02</span></span></code></pre></div>
+<span><span class="co">#&gt;    0.02    0.00    0.02</span></span></code></pre></div>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/system.time.html" class="external-link">system.time</a></span><span class="op">(</span><span class="fu">interp</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/interp/man/tri.mesh.html" class="external-link">tri.mesh</a></span><span class="op">(</span><span class="va">x</span>,<span class="va">y</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="co">#&gt;    user  system elapsed </span></span>
-<span><span class="co">#&gt;       0       0       0</span></span></code></pre></div>
+<span><span class="co">#&gt;    0.01    0.00    0.02</span></span></code></pre></div>
 <p>For larger input:</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/Uniform.html" class="external-link">runif</a></span><span class="op">(</span><span class="fl">5000</span><span class="op">)</span></span>
@@ -136,15 +136,15 @@ does. The object can be plotted in a similar way.</p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/system.time.html" class="external-link">system.time</a></span><span class="op">(</span><span class="fu">triad</span><span class="fu">::</span><span class="fu"><a href="../reference/del.tri.html">del.tri</a></span><span class="op">(</span><span class="va">x</span>,<span class="va">y</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="co">#&gt;    user  system elapsed </span></span>
-<span><span class="co">#&gt;    6.03    0.95    7.03</span></span></code></pre></div>
+<span><span class="co">#&gt;    6.03    0.89    7.06</span></span></code></pre></div>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/system.time.html" class="external-link">system.time</a></span><span class="op">(</span><span class="fu">triad</span><span class="fu">::</span><span class="fu"><a href="../reference/DelTri.html">DelTri</a></span><span class="op">(</span><span class="va">x</span>,<span class="va">y</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="co">#&gt;    user  system elapsed </span></span>
-<span><span class="co">#&gt;    0.28    0.00    0.29</span></span></code></pre></div>
+<span><span class="co">#&gt;    0.31    0.00    0.31</span></span></code></pre></div>
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/system.time.html" class="external-link">system.time</a></span><span class="op">(</span><span class="fu">interp</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/interp/man/tri.mesh.html" class="external-link">tri.mesh</a></span><span class="op">(</span><span class="va">x</span>,<span class="va">y</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="co">#&gt;    user  system elapsed </span></span>
-<span><span class="co">#&gt;    0.11    0.00    0.11</span></span></code></pre></div>
+<span><span class="co">#&gt;    0.13    0.00    0.12</span></span></code></pre></div>
 </div>
 <div class="section level3">
 <h3 id="swap-subroutine">SWAP subroutine<a class="anchor" aria-label="anchor" href="#swap-subroutine"></a>

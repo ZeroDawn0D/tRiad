@@ -1,5 +1,4 @@
-
-# tRiad
+# tRiad <img src="man/figures/hex.png" align="right" width="120" />
 
 <!-- badges: start -->
 
@@ -17,42 +16,32 @@ mentors Di Cook and Harriet Mason.
 
 ## Installation
 
-``` r
-#Development version
-#install.packages("devtools")
-devtools::install_github("ZeroDawn0D/tRiad")
-```
+    #Development version
+    #install.packages("devtools")
+    devtools::install_github("ZeroDawn0D/tRiad")
 
 ## Running
 
-``` r
-x <- c(0,10,-20,30,10,-10)
-y <- c(10,-20,-20,20,0,0)
-plot(x,y)
-```
+    x <- c(0,10,-20,30,10,-10)
+    y <- c(10,-20,-20,20,0,0)
+    plot(x,y)
 
-![](man/figures/README-unnamed-chunk-2-1.png)<!-- -->
+![](man/figures/README-unnamed-chunk-2-1.png)
 
-``` r
-library(triad)
-triad.obj <- DelTri(x,y)
-plot(triad.obj)
-```
+    library(triad)
+    triad.obj <- DelTri(x,y)
+    plot(triad.obj)
 
-![](man/figures/README-unnamed-chunk-3-1.png)<!-- -->
+![](man/figures/README-unnamed-chunk-3-1.png)
 
 ## Using Data Frames
 
-``` r
-data("hundred")
-plot(hundred)
-```
+    data("hundred")
+    plot(hundred)
 
-![](man/figures/README-unnamed-chunk-4-1.png)<!-- -->
+![](man/figures/README-unnamed-chunk-4-1.png)
 
-``` r
-triad.hundred <- DelTri(hundred)
-plot(triad.hundred, type = 'n')
-```
+    triad.hundred <- DelTri(hundred)
+    plot(triad.hundred, type = 'n')
 
-![](man/figures/README-unnamed-chunk-5-1.png)<!-- -->
+![](man/figures/README-unnamed-chunk-5-1.png)

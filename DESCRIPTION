@@ -1,10 +1,10 @@
-Package: triad
-Title: Constrained Delaunay Triangulations in R 
+Package: tRiad
+Title: Delaunay Triangulations in R 
 Version: 1.0.0
 Authors@R:
   c(
     person(given = "Umang",
-           family = "Majumer",
+           family = "Majumder",
            email = "umang.zerodawn0d@gmail.com",
            role = c("aut","cre")),
     person(given = "Harriet",
@@ -17,7 +17,7 @@ Authors@R:
            role = "aut",
            comment = c(ORCID = "0000-0002-3813-7155"))
     )
-Description: An implementation of the Constrained Delaunay Triangulations as detailed in Cline and Renka(1990).
+Description: An implementation of the Delaunay Triangulation Algorithm as detailed in S.W.Sloan(1987) in R and C++.
 License: GPL (>= 3)
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)

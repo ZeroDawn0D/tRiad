@@ -1,0 +1,26 @@
+citHeader("To cite tRiad in publications use:")
+
+citEntry(entry = "Article",
+  title        = "A fast algorithm for constructing Delaunay triangulations in the plane",
+  author       = personList(as.person("S.W. Sloan")),
+  journal      = "Advances in Engineering Software",
+  year         = "1978",
+  volume       = "9",
+  number       = "1",
+  pages        = "34-55",
+  doi          = "10.1016/0141-1195(87)90043-X",
+  url          = "https://www.sciencedirect.com/science/article/abs/pii/014111958790043X",
+
+  textVersion  = paste("A fast algorithm for constructing Delaunay triangulations in the plane by S.W. Sloan (Advances in Engineering Software, Volume 9, Issue 1, Jan 1978, Pg 34-55)")
+)
+
+citEntry(entry = "Manual",
+  title        = "tRiad: Delaunay Triangulations in R",
+  author       = personList(as.person("Umang Majumder"),
+                   as.person("Dianne Cook"),
+                   as.person("Harriet Mason")),
+  year         = "2022",
+  url          = "https://zerodawn0d.github.io/tRiad/",
+  textVersion  = paste("An implementation of the Delaunay Triangulation Algorithm as detailed in S.W.Sloan(1987) in R and C++.")
+
+)

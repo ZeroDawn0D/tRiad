@@ -28,7 +28,7 @@ mentors Di Cook and Harriet Mason.
 
 ![](man/figures/README-unnamed-chunk-2-1.png)
 
-    library(tRiad)
+    library("tRiad")
     tRiad.obj <- DelTri(x,y)
     plot(tRiad.obj)
 

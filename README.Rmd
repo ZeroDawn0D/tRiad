@@ -39,7 +39,7 @@ plot(x,y)
 ```
 
 ```{r}
-library(tRiad)
+library("tRiad")
 tRiad.obj <- DelTri(x,y)
 plot(tRiad.obj)
 ```

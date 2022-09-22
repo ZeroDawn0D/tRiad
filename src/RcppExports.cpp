@@ -12,7 +12,7 @@ Rcpp::Rostream<false>& Rcpp::Rcerr = Rcpp::Rcpp_cerr_get();
 
 // GetMatrix
 NumericMatrix GetMatrix(std::vector<std::vector<int>> m);
-RcppExport SEXP _triad_GetMatrix(SEXP mSEXP) {
+RcppExport SEXP _tRiad_GetMatrix(SEXP mSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -23,7 +23,7 @@ END_RCPP
 }
 // Edge
 int Edge(int I, int J, std::vector<std::vector<int>> e);
-RcppExport SEXP _triad_Edge(SEXP ISEXP, SEXP JSEXP, SEXP eSEXP) {
+RcppExport SEXP _tRiad_Edge(SEXP ISEXP, SEXP JSEXP, SEXP eSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -36,7 +36,7 @@ END_RCPP
 }
 // LeftRight
 double LeftRight(double Px, double Py, double Ax, double Ay, double Bx, double By);
-RcppExport SEXP _triad_LeftRight(SEXP PxSEXP, SEXP PySEXP, SEXP AxSEXP, SEXP AySEXP, SEXP BxSEXP, SEXP BySEXP) {
+RcppExport SEXP _tRiad_LeftRight(SEXP PxSEXP, SEXP PySEXP, SEXP AxSEXP, SEXP AySEXP, SEXP BxSEXP, SEXP BySEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -52,7 +52,7 @@ END_RCPP
 }
 // Swap
 bool Swap(double x1, double y1, double x2, double y2, double x3, double y3, double xp, double yp);
-RcppExport SEXP _triad_Swap(SEXP x1SEXP, SEXP y1SEXP, SEXP x2SEXP, SEXP y2SEXP, SEXP x3SEXP, SEXP y3SEXP, SEXP xpSEXP, SEXP ypSEXP) {
+RcppExport SEXP _tRiad_Swap(SEXP x1SEXP, SEXP y1SEXP, SEXP x2SEXP, SEXP y2SEXP, SEXP x3SEXP, SEXP y3SEXP, SEXP xpSEXP, SEXP ypSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -70,7 +70,7 @@ END_RCPP
 }
 // TriLoc
 int TriLoc(int i, std::vector<double> x, std::vector<double> y, std::vector<std::vector<int>> v, std::vector<std::vector<int>> e);
-RcppExport SEXP _triad_TriLoc(SEXP iSEXP, SEXP xSEXP, SEXP ySEXP, SEXP vSEXP, SEXP eSEXP) {
+RcppExport SEXP _tRiad_TriLoc(SEXP iSEXP, SEXP xSEXP, SEXP ySEXP, SEXP vSEXP, SEXP eSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -85,7 +85,7 @@ END_RCPP
 }
 // Delaun
 NumericMatrix Delaun(NumericVector norm_x, NumericVector norm_y);
-RcppExport SEXP _triad_Delaun(SEXP norm_xSEXP, SEXP norm_ySEXP) {
+RcppExport SEXP _tRiad_Delaun(SEXP norm_xSEXP, SEXP norm_ySEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -97,7 +97,7 @@ END_RCPP
 }
 // NewTriad
 List NewTriad(NumericVector x, NumericVector y, NumericMatrix v);
-RcppExport SEXP _triad_NewTriad(SEXP xSEXP, SEXP ySEXP, SEXP vSEXP) {
+RcppExport SEXP _tRiad_NewTriad(SEXP xSEXP, SEXP ySEXP, SEXP vSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -110,7 +110,7 @@ END_RCPP
 }
 // DelTri
 RObject DelTri(RObject x_, RObject y_);
-RcppExport SEXP _triad_DelTri(SEXP x_SEXP, SEXP y_SEXP) {
+RcppExport SEXP _tRiad_DelTri(SEXP x_SEXP, SEXP y_SEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -122,18 +122,18 @@ END_RCPP
 }
 
 static const R_CallMethodDef CallEntries[] = {
-    {"_triad_GetMatrix", (DL_FUNC) &_triad_GetMatrix, 1},
-    {"_triad_Edge", (DL_FUNC) &_triad_Edge, 3},
-    {"_triad_LeftRight", (DL_FUNC) &_triad_LeftRight, 6},
-    {"_triad_Swap", (DL_FUNC) &_triad_Swap, 8},
-    {"_triad_TriLoc", (DL_FUNC) &_triad_TriLoc, 5},
-    {"_triad_Delaun", (DL_FUNC) &_triad_Delaun, 2},
-    {"_triad_NewTriad", (DL_FUNC) &_triad_NewTriad, 3},
-    {"_triad_DelTri", (DL_FUNC) &_triad_DelTri, 2},
+    {"_tRiad_GetMatrix", (DL_FUNC) &_tRiad_GetMatrix, 1},
+    {"_tRiad_Edge", (DL_FUNC) &_tRiad_Edge, 3},
+    {"_tRiad_LeftRight", (DL_FUNC) &_tRiad_LeftRight, 6},
+    {"_tRiad_Swap", (DL_FUNC) &_tRiad_Swap, 8},
+    {"_tRiad_TriLoc", (DL_FUNC) &_tRiad_TriLoc, 5},
+    {"_tRiad_Delaun", (DL_FUNC) &_tRiad_Delaun, 2},
+    {"_tRiad_NewTriad", (DL_FUNC) &_tRiad_NewTriad, 3},
+    {"_tRiad_DelTri", (DL_FUNC) &_tRiad_DelTri, 2},
     {NULL, NULL, 0}
 };
 
-RcppExport void R_init_triad(DllInfo *dll) {
+RcppExport void R_init_tRiad(DllInfo *dll) {
     R_registerRoutines(dll, NULL, CallEntries, NULL, NULL);
     R_useDynamicSymbols(dll, FALSE);
 }

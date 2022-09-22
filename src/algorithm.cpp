@@ -410,7 +410,7 @@ List NewTriad(NumericVector x,
 //' @param y_ vector of Y coordinates
 //' @importFrom Rcpp evalCpp
 //' @exportPattern ^[[:alpha:]]+
-//' @useDynLib triad, .registration=TRUE
+//' @useDynLib tRiad, .registration=TRUE
 //' @export
 //[[Rcpp::export]]
 RObject DelTri(RObject x_,

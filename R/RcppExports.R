@@ -5,7 +5,7 @@
 #' @description Converts a 2D vector int to a NumericMatrix
 #' @param m A 2D vector int object from C++ STL
 GetMatrix <- function(m) {
-    .Call(`_triad_GetMatrix`, m)
+    .Call(`_tRiad_GetMatrix`, m)
 }
 
 #' @title Implementation of the EDG subroutine, written in C++
@@ -14,7 +14,7 @@ GetMatrix <- function(m) {
 #' @param J index of triangle J
 #' @param e List of adjacent triangles
 Edge <- function(I, J, e) {
-    .Call(`_triad_Edge`, I, J, e)
+    .Call(`_tRiad_Edge`, I, J, e)
 }
 
 #' @title Cross Product of AB and AP
@@ -26,7 +26,7 @@ Edge <- function(I, J, e) {
 #' @param Bx X component of point B
 #' @param By Y component of point B
 LeftRight <- function(Px, Py, Ax, Ay, Bx, By) {
-    .Call(`_triad_LeftRight`, Px, Py, Ax, Ay, Bx, By)
+    .Call(`_tRiad_LeftRight`, Px, Py, Ax, Ay, Bx, By)
 }
 
 #'@title Implementation of the SWAP subroutine
@@ -40,7 +40,7 @@ LeftRight <- function(Px, Py, Ax, Ay, Bx, By) {
 #'@param xp X coordinate of P
 #'@param yp Y coordinate of P
 Swap <- function(x1, y1, x2, y2, x3, y3, xp, yp) {
-    .Call(`_triad_Swap`, x1, y1, x2, y2, x3, y3, xp, yp)
+    .Call(`_tRiad_Swap`, x1, y1, x2, y2, x3, y3, xp, yp)
 }
 
 #'@title Check which triangles a point lies within
@@ -51,7 +51,7 @@ Swap <- function(x1, y1, x2, y2, x3, y3, xp, yp) {
 #'@param v Vertices of triangles, columns are triangle number and rows are vertices 1,2,3
 #'@param e Adjacency of triangles, columns are triangle number and rows are ids of adjacent triangles
 TriLoc <- function(i, x, y, v, e) {
-    .Call(`_triad_TriLoc`, i, x, y, v, e)
+    .Call(`_tRiad_TriLoc`, i, x, y, v, e)
 }
 
 #'@title Implementation of the DELAUN subroutine
@@ -59,7 +59,7 @@ TriLoc <- function(i, x, y, v, e) {
 #'@param norm_x Normalised X coordinates of points
 #'@param norm_y Normalised Y coordinates of points
 Delaun <- function(norm_x, norm_y) {
-    .Call(`_triad_Delaun`, norm_x, norm_y)
+    .Call(`_tRiad_Delaun`, norm_x, norm_y)
 }
 
 #'@title Constructor for the triad class, written in C++
@@ -68,7 +68,7 @@ Delaun <- function(norm_x, norm_y) {
 #'@param y Object of NumericVector class, y coordinates
 #'@param v Object of NumericMatrix class, List of triangles
 NewTriad <- function(x, y, v) {
-    .Call(`_triad_NewTriad`, x, y, v)
+    .Call(`_tRiad_NewTriad`, x, y, v)
 }
 
 #' @title Implementation of the DELTRI subroutine, written in C++
@@ -77,9 +77,9 @@ NewTriad <- function(x, y, v) {
 #' @param y_ vector of Y coordinates
 #' @importFrom Rcpp evalCpp
 #' @exportPattern ^[[:alpha:]]+
-#' @useDynLib triad, .registration=TRUE
+#' @useDynLib tRiad, .registration=TRUE
 #' @export
 DelTri <- function(x_, y_ = NULL) {
-    .Call(`_triad_DelTri`, x_, y_)
+    .Call(`_tRiad_DelTri`, x_, y_)
 }
 

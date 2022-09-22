@@ -15,7 +15,7 @@ knitr::opts_chunk$set(
 ```
 
 ```{r setup}
-#devtools::install_github("ZeroDawn0D/tRiad")
+devtools::install_github("ZeroDawn0D/tRiad")
 library("tRiad")
 ```
 

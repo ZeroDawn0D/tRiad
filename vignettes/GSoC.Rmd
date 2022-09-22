@@ -16,7 +16,7 @@ knitr::opts_chunk$set(
 
 ```{r setup}
 #devtools::install_github("ZeroDawn0D/tRiad")
-library(triad)
+library(tRiad)
 ```
 
 # Introduction
@@ -34,7 +34,7 @@ The `DelTri()` function creates an object of class `triad`. This object can be p
 ```{r}
     x <- runif(100)
     y <- runif(100)
-    o1 <- triad::DelTri(x,y)
+    o1 <- tRiad::DelTri(x,y)
     plot(o1, type = 'n')
 ```
 
@@ -45,7 +45,7 @@ The `del.tri()` function does what `DelTri()` does. The object can be plotted in
 ```{r}
 x <- runif(10)
 y <- runif(10)
-o2 <- triad::del.tri(x,y)
+o2 <- tRiad::del.tri(x,y)
 plot(o2)
 
 ```
@@ -62,11 +62,11 @@ y <- runif(500)
 ```
 
 ```{r}
-system.time(triad::del.tri(x,y))
+system.time(tRiad::del.tri(x,y))
 ```
 
 ```{r}
-system.time(triad::DelTri(x,y))
+system.time(tRiad::DelTri(x,y))
 ```
 
 ```{r}
@@ -81,11 +81,11 @@ y <- runif(5000)
 ```
 
 ```{r}
-system.time(triad::del.tri(x,y))
+system.time(tRiad::del.tri(x,y))
 ```
 
 ```{r}
-system.time(triad::DelTri(x,y))
+system.time(tRiad::DelTri(x,y))
 ```
 
 ```{r}

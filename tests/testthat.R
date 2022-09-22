@@ -7,6 +7,6 @@
 # * https://testthat.r-lib.org/reference/test_package.html#special-files
 
 library(testthat)
-library(triad)
+library(tRiad)
 
-test_check("triad")
+test_check("tRiad")

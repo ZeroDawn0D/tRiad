@@ -28,9 +28,9 @@ mentors Di Cook and Harriet Mason.
 
 ![](man/figures/README-unnamed-chunk-2-1.png)
 
-    library(triad)
-    triad.obj <- DelTri(x,y)
-    plot(triad.obj)
+    library(tRiad)
+    tRiad.obj <- DelTri(x,y)
+    plot(tRiad.obj)
 
 ![](man/figures/README-unnamed-chunk-3-1.png)
 
@@ -41,7 +41,7 @@ mentors Di Cook and Harriet Mason.
 
 ![](man/figures/README-unnamed-chunk-4-1.png)
 
-    triad.hundred <- DelTri(hundred)
-    plot(triad.hundred, type = 'n')
+    tRiad.hundred <- DelTri(hundred)
+    plot(tRiad.hundred, type = 'n')
 
 ![](man/figures/README-unnamed-chunk-5-1.png)

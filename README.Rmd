@@ -39,9 +39,9 @@ plot(x,y)
 ```
 
 ```{r}
-library(triad)
-triad.obj <- DelTri(x,y)
-plot(triad.obj)
+library(tRiad)
+tRiad.obj <- DelTri(x,y)
+plot(tRiad.obj)
 ```
 
 ## Using Data Frames
@@ -52,6 +52,6 @@ plot(hundred)
 ```
 
 ```{r}
-triad.hundred <- DelTri(hundred)
-plot(triad.hundred, type = 'n')
+tRiad.hundred <- DelTri(hundred)
+plot(tRiad.hundred, type = 'n')
 ```

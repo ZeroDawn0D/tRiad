@@ -409,7 +409,6 @@ List NewTriad(NumericVector x,
 //' @param x_ vector of X coordinates, if y_ is NULL, x_ is a data frame
 //' @param y_ vector of Y coordinates
 //' @importFrom Rcpp evalCpp
-//' @exportPattern ^[[:alpha:]]+
 //' @useDynLib tRiad, .registration=TRUE
 //' @export
 //[[Rcpp::export]]

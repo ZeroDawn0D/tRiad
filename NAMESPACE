@@ -3,6 +3,5 @@
 S3method(plot,triad)
 export(DelTri)
 export(del.tri)
-exportPattern("^[[:alpha:]]+")
 importFrom(Rcpp,evalCpp)
 useDynLib(tRiad, .registration=TRUE)
